@@ -1,0 +1,141 @@
+body {
+    margin: 0;
+}
+
+
+/* Định dạng chung cho trang*/
+
+.loginpage {
+    width: calc(100% - 15px);
+    height: calc(100vh - 17px);
+    background-color: #d3ffea;
+}
+
+
+/* Khung đăng nhập */
+
+.login {
+    width: 460px;
+    height: 545px;
+    background-color: #fff;
+    margin: 50px;
+    margin-top: 49px;
+    margin-left: 90px;
+    border-radius: 53px;
+    position: absolute;
+    top: 30px;
+}
+
+
+/* Định dạng dòng "ỨNG DỤNG QUẢN LÝ THƯ VIỆN" */
+
+.login .nameweb {
+    color: #1393ec;
+    font-size: 24px;
+    font-family: Montserrat;
+    text-align: center;
+    margin-top: 1em;
+    padding: 5px;
+    font-weight: bold;
+}
+
+
+/* Định dạng dòng "Đăng nhập" */
+
+.login .login-heading {
+    color: #31dc89;
+    font-size: 2.9rem;
+    font-family: Montserrat;
+    text-align: center;
+    margin-top: 0.5em;
+    margin-bottom: 42px;
+}
+
+
+/* Định dạng khung điền thông tin đăng nhập */
+
+.login input {
+    width: 330px;
+    height: 51px;
+    margin: 10px 20px;
+    padding: 1px 12px;
+    font-size: 1.2rem;
+    font-family: Montserrat;
+    border: 2px solid #2e2e43;
+    background-color: #d3ffea;
+    border-radius: 15px;
+}
+
+.login-form {
+    padding-left: 30px;
+}
+
+.login input:hover {
+    background-color: #31dc89;
+}
+
+
+/* Khối Submit */
+
+.submit {
+    padding-left: 136px;
+}
+
+
+/* Button Submit */
+
+.submit button {
+    color: #fff;
+    background-color: #31dc89;
+    margin: 2rem;
+    border-radius: 11px;
+    font-weight: 1000;
+    width: 115px;
+    height: 58px;
+    font-size: 23px;
+    border: 1px solid;
+}
+
+
+/* Khối ghi nhớ thông tin */
+
+.remember {
+    display: flex;
+    height: 50px;
+    padding-left: 33px;
+}
+
+.remember .text-rem {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 22px;
+    font-weight: 600;
+    font-family: Montserrat;
+    color: #2e2e43;
+    margin: 24px;
+    margin-top: -3px;
+}
+
+.remember button {
+    font-size: 17px;
+    margin: 25px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #31dc89;
+    border-radius: 5px;
+    margin-top: -3px;
+}
+
+
+/* Hình ảnh */
+
+.image {
+    background-image: url('./hình\ nền.png');
+    width: 100vh;
+    height: calc(100vh - 18px);
+    background-repeat: no-repeat;
+    background-size: 700px;
+    margin-left: 690px;
+    margin-right: 0;
+    margin-top: -591px;
+}
