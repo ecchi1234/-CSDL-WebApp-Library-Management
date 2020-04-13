@@ -12,7 +12,7 @@
     <!--Trang Đăng nhập-->
     <div class="loginpage">
         <!--Form đăng nhập-->
-        <form class="login" action="reader.html" method="GET">
+        <form class="login" action="reader.php" method="GET">
             <div class="nameweb">ỨNG DỤNG QUẢN LÝ THƯ VIỆN</div>
             <div class="login-heading">Đăng nhập</div>
             <div class="login-form">
