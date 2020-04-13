@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>Library</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" href="./asset/css/reader.css" />
+    <link rel="stylesheet" href="./front-end/asset/css/reader.css" />
 </head>
 
 <body>
