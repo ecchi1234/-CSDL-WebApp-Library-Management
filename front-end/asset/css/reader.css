@@ -11,7 +11,7 @@ body {
 .header {
     display: flex;
     background-color: #fff;
-    width: 1000 px;
+    width: 100vw;
     height: 50px;
     border-bottom: 2px solid #edeff5;
 }
@@ -47,48 +47,48 @@ body {
 
 
 /* Tên người dùng và profile */
+.user{
+    position: relative;
+    display: flex;
+    margin-right: 0px;
+    height: 100%;
+    width: 100%;
+}
 
 .user .username {
+    position: absolute;
     width: 215px;
-    float: left;
-    font-weight: bold;
-    font-size: 22px;
+    font-size: 1.5em;
     font-family: Montserrat;
     background-position: center;
     color: #31dc89;
-    margin-left: 94vh;
     line-height: 55px;
+    right: 25px;
 }
 
-.user .usericon {
-    float: left;
-    width: 50px;
-    height: 50px;
-    margin-left: 890px;
-    margin-top: -55px;
-    background-size: 53px;
-    background-position: center;
-    background-image: url('./500_F_152381889_mkOnWAyIqWStfRT5CFhsaH12oCvb5moh.jpg');
-    line-height: 60px;
+.user i.fa.fa-user-circle-o{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    font-size: 40px;
+    color: #31cd89;
+    top: 5px;
+    right: 250px;
 }
 
-.user .usernarrow {
-    float: left;
-    width: 50px;
-    height: 50px;
-    margin-left: 931px;
-    margin-top: -55px;
-    background-size: 26px;
-    background-position: center;
-    background-image: url('../icon/Narrow.png');
-    background-repeat: no-repeat;
-    line-height: 60px;
+.user i.fa.fa-caret-down{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    color: #31cd89;
+    top: calc((100% - 22px)/2);
+    right: 5px;
 }
 
 
 /* Xử lý Menu */
-
-.menu {
+.menu{
     float: left;
     width: 250px;
     height: calc(100vh - 52px);
@@ -96,13 +96,13 @@ body {
     font-family: Montserrat;
 }
 
+.menu-content {
+    width: 100%;
+}
+
 
 /* Phần menu có nội dung */
 
-.menu-content {
-    width: 100%;
-    height: calc(100% - 50px);
-}
 
 .menu-item {
     display: flex;
@@ -298,95 +298,19 @@ body {
 /* Xử lý Content */
 
 .content {
-    display: flex;
+    width: calc(100% - 250px);
+    height: calc(100vh - 52px);
     position: relative;
-    padding: 20px;
-    width: calc(100% - 300px);
-    height: calc(100vh - 100px);
+    margin-left: 250px;
 }
 
 .content-header {
     display: flex;
+    position: relative;
+    width: 100%;
+    height: 50px;
 }
 
-
-/* Form tìm kiếm */
-
-.header-group input {
-    height: 29px;
-    padding-left: 13px;
-    font: 27px;
-    font-family: Helvetica;
-    font-size: 1.2rem;
-    border: 2px solid #31dc89;
-    border-right-width: 0;
-}
-
-
-/* Khung Họ và tên */
-
-.header-input-name {
-    margin-left: 2px;
-    width: 210px;
-}
-
-.content-header .nameicon {
-    height: 31px;
-    width: 19px;
-    margin-left: 227px;
-    margin-top: -35px;
-    background-image: url('../icon/Narrow.png');
-    background-size: 20px;
-    background-repeat: no-repeat;
-    border: 2px solid #31dc89;
-    background-position: center;
-    border-radius: 1px;
-    border-left-width: 0;
-}
-
-
-/* Khung Mã số thẻ */
-
-.header-input-number {
-    width: 93px;
-    margin-left: 15px;
-}
-
-.content-header .numbericon {
-    height: 31px;
-    width: 19px;
-    margin-left: 122px;
-    margin-top: -35px;
-    background-image: url('../icon/Narrow.png');
-    background-size: 20px;
-    background-repeat: no-repeat;
-    border: 2px solid #31dc89;
-    background-position: center;
-    border-radius: 1px;
-    border-left-width: 0;
-}
-
-
-/* Khung Trạng thái */
-
-.header-input-status {
-    width: 93px;
-    margin-left: 15px;
-}
-
-.content-header .statusicon {
-    height: 31px;
-    width: 19px;
-    margin-left: 122px;
-    margin-top: -35px;
-    background-image: url('../icon/Narrow.png');
-    background-size: 20px;
-    background-repeat: no-repeat;
-    border: 2px solid #31dc89;
-    background-position: center;
-    border-radius: 1px;
-    border-left-width: 0;
-}
 
 
 /* Button Tìm kiếm */
@@ -395,28 +319,47 @@ body {
     width: 34px;
     height: 34px;
     margin-left: 13px;
-    background-image: url('../icon/find.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 33px;
-    border: 1px solid #31dc89;
+    border: none;
+    background-color: #31cd89;
     border-radius: 8px;
 }
+.btnfind:hover{
+    cursor: pointer;
+}
+.btnfind .fa.fa-search{
+    font-size: 20px;
+    color: #fff;
+}
+.content .content-header form{
+    position: absolute;
+    left: 20px;
+    top: 17px;
+}
 
+.header-input-name{
+    height: 30px;
+    padding: 4px;
+    box-sizing: border-box;
+    border: 1px solid #31cd89;
+}
+#tag{
+    height: 30px;
+    border: 1px solid #31cd89;
+    scrollbar-arrow-color: #31cd89;
+}
 
 /* Button Thêm */
 
 .btnadd {
     position: absolute;
-    background-image: url('../icon/add.png');
     width: 97px;
-    right: 15px;
     height: 34px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 105px;
     border-radius: 8px;
-    border: 1px solid #31cd89;
+    background-color: #31cd89;
+    border: none;
+    color: #fff;
+    right: 20px;
+    top: 20px;
 }
 .btnadd:hover{
     cursor: pointer;
@@ -426,9 +369,11 @@ body {
 
 .content .content-body {
     position: absolute;
-    top: 100px;
-    bottom: 100px;
-    width: calc(100% - 50px);
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    top: 60px;
+    padding: 10px;
 }
 
 
@@ -437,26 +382,36 @@ body {
 table {
     border-collapse: collapse;
     text-align: center;
-    border: 3px dashed #31dc89;
+    border: 1px dashed #31dc89;
     background-color: #edeff5;
+    width: 100%;
 }
 table thead{
     background-color: #2e2e43;
     color: #fff;
 }
-table td,
-th {
+table td,th {
     border: 1px dashed #31dc89;
     font-family: Montserrat;
-    font-weight: bold;
-    font-size: larger;
+    padding: 4px;
 }
 table tbody tr:hover {
     background-color: #bfdfcf;
     cursor: pointer;
 }
 
-
+.thaotac{
+    font-size: 20px;
+}
+.thaotac i.fa.fa-trash{
+    color: red;
+}
+.thaotac i.fa.fa-pencil{
+    color: #1393ec;
+}
+.thaotac i.fa.fa-eye{
+    color: #31cd89;
+}
 /* Xử lý Foot */
 
 

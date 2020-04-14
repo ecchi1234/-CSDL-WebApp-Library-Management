@@ -6,6 +6,8 @@
     <title>Library</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" href="./front-end/asset/css/reader.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../front-end/asset/css/common.css">
 </head>
 
 <body>
@@ -14,19 +16,18 @@
         <!--Logo-->
         <div class="logo">
             <div class="iconbar"></div>
-            <div class="logotext">ỨNG DỤNG QUẢN LÝ THƯ VIỆN</div>
+            <div class="logotext">DEADLIB</div>
         </div>
         <!--User-->
         <div class="user">
             <div class="username">Nguyễn Ngọc Chi</div>
-            <div class="usericon"></div>
-            <div class="usernarrow"></div>
+            <i class="fa fa-user-circle-o"></i>
+            <i class="fa fa-caret-down"></i>
         </div>
     </div>
 
     <!--Menu-->
     <div class="menu">
-
         <!--MenuItem-->
         <div class="menu-content">
             <!--Reader-->
@@ -69,39 +70,31 @@
                 <div class="menu-item-text-help">Trợ giúp</div>
             </div>
         </div>
-
     </div>
     <!--Content-->
     <div class="content">
         <!--Content heading-->
         <div class="content-header">
             <!--Khung Họ và tên-->
-            <div class="header-group">
-                <input type="text" class="header-input-name" placeholder="Họ và tên">
-                <div class="nameicon"></div>
-            </div>
-            <!--Khung Mã số thẻ-->
-            <div class="header-group">
-                <input type="text" class="header-input-number" placeholder="Mã số thẻ">
-                <div class="numbericon"></div>
-            </div>
-            <!--Khung trạng thái-->
-            <div class="header-group">
-                <input type="text" class="header-input-status" placeholder="Trạng thái">
-                <div class="statusicon"></div>
-            </div>
-            <!--Button Tìm kiếm-->
-            <div class="header-group">
-                <button class="btnfind"></button>
-            </div>
+            <form>
+                <input type="text" class="header-input-name" placeholder="Tìm kiếm">
+                <select id="tag">
+                    <option value="name">Tên</option>
+                    <option value="address">Địa chỉ</option>
+                    <option value="gender">Giới tính</option>
+                    <option value="cardNumber">Số thẻ</option>
+                    <option value="email">Email</option>
+                    <option value="mobile">Số điện thoại</option>
+                </select>
+                <!--Button Tìm kiếm-->
+                <button type="submit" class="btnfind"><i class="fa fa-search"></i></button>
+            </form>
             <!--Button Thêm-->
-            <div class="header-group">
-                <button class="btnadd"></button>
-            </div>
+            <button class="btnadd"><i class="fa fa-plus"></i>Thêm</button>
         </div>
         <!--Content body-->
         <div class="content-body">
-            <table border="1" cellpadding="0" style="width:83vw ; height: 65vh">
+            <table border="1" cellpadding="0">
                 <thead>
                     <tr>
                         <th>
@@ -125,7 +118,11 @@
                         <td>Nam</td>
                         <td>nta@gmail.com</td>
                         <td>1456474956</td>
-                        <td class="thaotac">Thao tác</td>
+                        <td class="thaotac">
+                            <i class="fa fa-trash"></i>
+                            <i class="fa fa-pencil"></i>
+                            <i class="fa fa-eye"></i>
+                        </td>
                     </tr>
                     <tr>
                         <td>Nguyễn Văn A</td>
@@ -133,7 +130,11 @@
                         <td>Nam</td>
                         <td>nta@gmail.com</td>
                         <td>1456474956</td>
-                        <td class="thaotac">Thao tác</td>
+                        <td class="thaotac">
+                            <i class="fa fa-trash"></i>
+                            <i class="fa fa-pencil"></i>
+                            <i class="fa fa-eye"></i>
+                        </td>
                     </tr>
                     <tr>
                         <td>Nguyễn Văn A</td>
@@ -141,7 +142,11 @@
                         <td>Nam</td>
                         <td>nta@gmail.com</td>
                         <td>1456474956</td>
-                        <td class="thaotac">Thao tác</td>
+                        <td class="thaotac">
+                            <i class="fa fa-trash"></i>
+                            <i class="fa fa-pencil"></i>
+                            <i class="fa fa-eye"></i>
+                        </td>
                     </tr>
                     <tr>
                         <td>Nguyễn Văn A</td>
@@ -149,7 +154,11 @@
                         <td>Nam</td>
                         <td>nta@gmail.com</td>
                         <td>1456474956</td>
-                        <td class="thaotac">Thao tác</td>
+                        <td class="thaotac">
+                            <i class="fa fa-trash"></i>
+                            <i class="fa fa-pencil"></i>
+                            <i class="fa fa-eye"></i>
+                        </td>
                     </tr>
                     <tr>
                         <td>Nguyễn Văn A</td>
@@ -157,7 +166,11 @@
                         <td>Nam</td>
                         <td>nta@gmail.com</td>
                         <td>1456474956</td>
-                        <td class="thaotac">Thao tác</td>
+                        <td class="thaotac">
+                            <i class="fa fa-trash"></i>
+                            <i class="fa fa-pencil"></i>
+                            <i class="fa fa-eye"></i>
+                        </td>
                     </tr>
                     <tr>
                         <td>Nguyễn Văn A</td>
@@ -165,7 +178,11 @@
                         <td>Nam</td>
                         <td>nta@gmail.com</td>
                         <td>1456474956</td>
-                        <td class="thaotac">Thao tác</td>
+                        <td class="thaotac">
+                            <i class="fa fa-trash"></i>
+                            <i class="fa fa-pencil"></i>
+                            <i class="fa fa-eye"></i>
+                        </td>
                     </tr>
                     <tr>
                         <td>Nguyễn Văn A</td>
@@ -173,7 +190,11 @@
                         <td>Nam</td>
                         <td>nta@gmail.com</td>
                         <td>1456474956</td>
-                        <td class="thaotac">Thao tác</td>
+                        <td class="thaotac">
+                            <i class="fa fa-trash"></i>
+                            <i class="fa fa-pencil"></i>
+                            <i class="fa fa-eye"></i>
+                        </td>
                     </tr>
                     <tr>
                         <td>Nguyễn Văn A</td>
@@ -181,7 +202,11 @@
                         <td>Nam</td>
                         <td>nta@gmail.com</td>
                         <td>1456474956</td>
-                        <td class="thaotac">Thao tác</td>
+                        <td class="thaotac">
+                            <i class="fa fa-trash"></i>
+                            <i class="fa fa-pencil"></i>
+                            <i class="fa fa-eye"></i>
+                        </td>
                     </tr>
                     <tr>
                         <td>Nguyễn Văn A</td>
@@ -189,7 +214,11 @@
                         <td>Nam</td>
                         <td>nta@gmail.com</td>
                         <td>1456474956</td>
-                        <td class="thaotac">Thao tác</td>
+                        <td class="thaotac">
+                            <i class="fa fa-trash"></i>
+                            <i class="fa fa-pencil"></i>
+                            <i class="fa fa-eye"></i>
+                        </td>
                     </tr>
                     <tr>
                         <td>Nguyễn Văn A</td>
@@ -197,7 +226,11 @@
                         <td>Nam</td>
                         <td>nta@gmail.com</td>
                         <td>1456474956</td>
-                        <td class="thaotac">Thao tác</td>
+                        <td class="thaotac">
+                            <i class="fa fa-trash"></i>
+                            <i class="fa fa-pencil"></i>
+                            <i class="fa fa-eye"></i>
+                        </td>
                     </tr>
                 </tbody>
             </table>
