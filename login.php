@@ -117,7 +117,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 </div>
             </div>
             <!--Button Submit-->
-            <button type="submit" id="btnSubmit">Login</button>
+            <button type="submit" id="btnSubmit" formmethod="post" onclick="window.location.href='welcome.php';">Login</button>
             <!--Button Ghi nhớ-->
             <div class="remember">
                 <input type="checkbox" id="btn-rem"></input>
