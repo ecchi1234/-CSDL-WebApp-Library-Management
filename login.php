@@ -94,8 +94,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <meta charset="utf-8" />
     <title>Library</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" href="../front-end/asset/css/login.css">
-    <link rel="stylesheet" href="../front-end/asset/css/common.css">
+    <link rel="stylesheet" href="./front-end/asset/css/login.css">
+    <link rel="stylesheet" href="./front-end/asset/css/common.css">
 </head>
 
 <body>
@@ -108,11 +108,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="login-heading">Đăng nhập</div>
             <div class="login-form">
                 <div class="login-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
-                    <input type="text" class="login-input" placeholder="Username" value="<?php echo $username; ?>">
+                    <input type="text" class="login-input" placeholder="Username" name="username" value="<?php echo $username; ?>">
                     <span class="help-block"><?php echo $username_err; ?></span>
                 </div>
                 <div class="login-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-                    <input type="password" class="login-input" placeholder="Password">
+                    <input type="password" class="login-input" placeholder="Password" name="password">
                     <span class="help-block"><?php echo $password_err; ?></span>
                 </div>
             </div>
