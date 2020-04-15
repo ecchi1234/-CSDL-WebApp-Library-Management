@@ -30,7 +30,7 @@
             <i class="fa fa-star"></i>
             <i class="fa fa-star"></i>
         </div>
-        <a class="start"href="./register.php"><button>Get Started</button></a>
+        <a class="start"href="register.php"><button>Get Started</button></a>
     </div>
 </body>
 </html>
