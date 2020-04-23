@@ -20,3 +20,7 @@ _Về phía bạn đọc:_
 + Thống kê số sách đang mượn, đã mượn, đã trả, chưa trả.
 + Chỉnh sửa thông tin cá nhân
 + Đổi mật khẩu tài khoản (nếu là lần đầu thì yêu cầu phải đổi vì mật khẩu lúc đầu được tạo mặc định cho các tài khoản)
+
+**Cơ sở dữ liệu:**
+
+![Library Model Database](https://github.com/ecchi1234/-CSDL-WebApp-Library-Management/blob/master/libmodel.png)
