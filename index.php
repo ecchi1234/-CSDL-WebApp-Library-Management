@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DeadLib</title>
-    <link rel="stylesheet" href="./front-end/asset/css/index.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./front-end/asset/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="./front-end/asset/css/common.css">
 </head>
 <body>
+<div class="container">
     <div class="heading">
         <span>DeadLib</span>
         <div class="menu">
@@ -32,5 +33,6 @@
         </div>
         <a class="start"href="register.php"><button>Get Started</button></a>
     </div>
+</div>
 </body>
 </html>
