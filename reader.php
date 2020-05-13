@@ -12,12 +12,12 @@ session_start();
       <meta name="author" content="">
       <title>DEADLIB</title>
       <!-- Custom fonts for this template-->
-      <link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+      <link href="./v/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
       <link href="https://fonts.google.com/specimen/Montserrat" rel="stylesheet">
       <!-- Custom styles for this template-->
       <link href="./css/lib.css" rel="stylesheet">
       <!--This need to be on top of this html-->
-      <script src="./vendor/jquery/jquery.min.js"></script>
+      <script src="./v/jquery/jquery.min.js"></script>
       <script src="./js/sb-admin-2.min.js"></script>
       <script type="text/javascript">
         $(document).ready(function(){
@@ -636,14 +636,14 @@ session_start();
       </div>
       <!-- Bootstrap core JavaScript-->
       <!-- <script src="./vendor/jquery/jquery.min.js"></script> -->
-      <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="./v/bootstrap/js/bootstrap.bundle.min.js"></script>
       <!-- Core plugin JavaScript-->
-      <script src="./vendor/jquery-easing/jquery.easing.min.js"></script>
+      <script src="./v/jquery-easing/jquery.easing.min.js"></script>
       <!-- Custom scripts for all pages-->
       <!-- <script src="./js/sb-admin-2.min.js"></script> -->
       <!-- Page level plugins -->
-      <script src="./vendor/datatables/jquery.dataTables.min.js"></script>
-      <script src="./vendor/datatables/dataTables.bootstrap4.min.js"></script>
+      <script src="./v/datatables/jquery.dataTables.min.js"></script>
+      <script src="./v/datatables/dataTables.bootstrap4.min.js"></script>
       <!-- Page level custom scripts -->
       <script src="./js/demo/datatables-demo.js"></script>
    </body>
