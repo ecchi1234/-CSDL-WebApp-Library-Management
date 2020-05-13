@@ -13,6 +13,8 @@ define('DB_NAME', 'heroku_2b7e9ade604dde8');
  
 /* Attempt to connect to MySQL database */
 $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+mysqli_set_charset($link, 'UTF8');
  
 // Check connection
 if($link === false){
