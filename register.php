@@ -3,8 +3,8 @@
 require_once "config.php";
  
 // Define variables and initialize with empty values
-$username = $password = $confirm_password = "";
-$username_err = $password_err = $confirm_password_err = "";
+$username = $password = $confirm_password = $fname = $lname = $phoneNumber = $address = "";
+$username_err = $password_err = $confirm_password_err = $fname_err = $lname_err = $phoneNumber_err = $address_err = "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -14,7 +14,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $username_err = "Please enter a username.";
     } else{
         // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE username = ?";
+        $sql = "SELECT cardNumber FROM reader WHERE userName = ?";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -60,75 +60,196 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $confirm_password_err = "Password did not match.";
         }
     }
+
+    // Validate first name
+    if(empty(trim($_POST["fname"]))){
+        $fname_err = "Please enter first name.";     
+    } else{
+        $fname = trim($_POST["fname"]);
+    }
+
+    // Validate last name
+    if(empty(trim($_POST["lname"]))){
+        $lname_err = "Please enter last name.";     
+    } else{
+        $lname = trim($_POST["lname"]);
+    }
+
+    // Validate address
+    if(empty(trim($_POST["address"]))){
+        $address_err = "Please enter address.";     
+    } else{
+        $address = trim($_POST["address"]);
+    }
+
+    // Validate phone number
+    if(empty(trim($_POST["phoneNumber"]))){
+        $phoneNumber_err = "Please enter your phone number.";     
+    } else{
+        $phoneNumber = trim($_POST["phoneNumber"]);
+    }
+
+    // Validate last name
+    if(empty(trim($_POST["lname"]))){
+        $lname_err = "Please enter last name.";     
+    } else{
+        $lname = trim($_POST["lname"]);
+    }
+
+    $readerName="";
+    $readerName.=$lname;
+    $readerName.=" ";
+    $readerName.=$fname;
+
+    
     
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
-        
-        // Prepare an insert statement
-        $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
-         
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
+    if(empty($address_err) && empty($phoneNumber_err) && empty($fname_err) && empty($lname_err) && empty($username_err) && empty($password_err) && empty($confirm_password_err)){
+       
+        $sql0 = "INSERT INTO card (createdDay, expiredDay) VALUES (DATE(NOW()), ADDDATE(DATE(NOW()), INTERVAL 2 YEAR))";
+        if($result = mysqli_query($link, $sql0)){
             
-            // Set parameters
-            $param_username = $username;
-            $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                // Redirect to login page
-                header("location: login.php");
-            } else{
-                echo "Something went wrong. Please try again later.";
-            }
+            $last_id = mysqli_insert_id($link);
+            // Prepare an insert statement
+            $sql = "INSERT INTO reader (cardNumber, userName, passWord, readerName, address, phoneNumber) VALUES (".$last_id.",?, ?, ?, ?, ?)";
+            echo $last_id;
+            echo $sql;
+            if($stmt = mysqli_prepare($link, $sql)){
+               
+                // Bind variables to the prepared statement as parameters
+                mysqli_stmt_bind_param($stmt, "sssss", $param_username, $param_password, $param_readerName, $param_address, $param_phoneNumber);
+                
+                // Set parameters
+                $param_username = $username;
+                $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+                $param_readerName = $readerName;
+                $param_address = $address;
+                $param_phoneNumber = $phoneNumber;
+                
+                // Attempt to execute the prepared statement
+                if(mysqli_stmt_execute($stmt)){
+                    // Redirect to login page
+                    header("location: index.php");
+                } else{
+                    echo "Something went wrong. Please try again later.";
+                }
 
-            // Close statement
-            mysqli_stmt_close($stmt);
+                // Close statement
+                mysqli_stmt_close($stmt);
+            }
         }
-    }
-    
+        
+    }  
     // Close connection
     mysqli_close($link);
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <style type="text/css">
-        body{ font: 14px sans-serif; }
-        .wrapper{ width: 350px; padding: 20px; }
-    </style>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>DEADLIB</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.google.com/specimen/Montserrat" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="css/lib.css" rel="stylesheet">
+
 </head>
-<body>
-    <div class="wrapper">
-        <h2>Sign Up</h2>
-        <p>Please fill this form to create an account.</p>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
-                <span class="help-block"><?php echo $username_err; ?></span>
-            </div>    
-            <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control" value="<?php echo $password; ?>">
-                <span class="help-block"><?php echo $password_err; ?></span>
+
+<body class="bg-gradient-primary">
+
+  <div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+      <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+          <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+          <div class="col-lg-7">
+            <div class="p-5">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+              </div>
+              <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="user">
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="First Name" name="fname">
+                    <span class="help-block"><?php echo $fname_err; ?></span>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Last Name" name="lname">
+                    <span class="help-block"><?php echo $lname_err; ?></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control form-control-user" id="exampleUsername" placeholder="Username" name="username">
+                  <span class="help-block"><?php echo $username_err; ?></span>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" name="password">
+                    <span class="help-block"><?php echo $password_err; ?></span>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password" name="confirm_password">
+                    <span class="help-block"><?php echo $confirm_password_err; ?></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control form-control-user" id="exampleInputAddress" placeholder="Address" name="address">
+                  <span class="help-block"><?php echo $address_err; ?></span>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control form-control-user" id="exampleInputMobile" placeholder="Phone Number" name="phoneNumber">
+                  <span class="help-block"><?php echo $phoneNumber_err; ?></span>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-user btn-block">
+                  Register Account
+                </button>
+                <hr>
+                <a href="index.php" class="btn btn-google btn-user btn-block">
+                  <i class="fab fa-google fa-fw"></i> Register with Google
+                </a>
+                <a href="index.php" class="btn btn-facebook btn-user btn-block">
+                  <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                </a>
+              </form>
+              <hr>
+              <div class="text-center">
+                <a class="small" href="forgot-password.html">Forgot Password?</a>
+              </div>
+              <div class="text-center">
+                <a class="small" href="index.php">Already have an account? Login!</a>
+              </div>
             </div>
-            <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
-                <label>Confirm Password</label>
-                <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
-                <span class="help-block"><?php echo $confirm_password_err; ?></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Submit">
-                <input type="reset" class="btn btn-default" value="Reset">
-            </div>
-            <p>Already have an account? <a href="login.php">Login here</a>.</p>
-        </form>
-    </div>    
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+
 </body>
+
 </html>
