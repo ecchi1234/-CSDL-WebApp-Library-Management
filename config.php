@@ -1,15 +1,15 @@
 <?php
 /* Database credentials. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */
-// define('DB_SERVER', 'us-cdbr-iron-east-01.cleardb.net');
-// define('DB_USERNAME', 'b47d7d31f530ec');
-// define('DB_PASSWORD', '2593df18');
-// define('DB_NAME', 'heroku_2b7e9ade604dde8');
+define('DB_SERVER', 'us-cdbr-iron-east-01.cleardb.net');
+define('DB_USERNAME', 'b47d7d31f530ec');
+define('DB_PASSWORD', '2593df18');
+define('DB_NAME', 'heroku_2b7e9ade604dde8');
 
-define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '');
-define('DB_NAME', 'lib');
+// define('DB_SERVER', 'localhost');
+// define('DB_USERNAME', 'root');
+// define('DB_PASSWORD', '');
+// define('DB_NAME', 'lib');
  
 /* Attempt to connect to MySQL database */
 $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
