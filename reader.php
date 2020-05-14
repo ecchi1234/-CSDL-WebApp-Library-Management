@@ -22,7 +22,9 @@ session_start();
       <script type="text/javascript">
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();
+            var seemodalhtml = "";
             $('.see').click(function(){
+               seemodalhtml = $("#informModal").html();
                var cardNumber = $(this).data('id');
                // AJAX request
                $.ajax({
@@ -38,6 +40,13 @@ session_start();
                   }
                })
             });
+
+            $("#informModal").on("hidden.bs.modal", function () {
+               //here you can get old html of you modal popup
+               $("#informModal").html(seemodalhtml);// In this, we are adding old html in modal pop for achieving reset trick
+            });
+
+            //-------------------------------------------------------------------
 
             $('.edit').click(function(){
                var cardNumber = $(this).data('id');
@@ -58,14 +67,14 @@ session_start();
             //------------------------------------
             //Code for open bootstrap modal pop up
             var addmodalHtml = ""; // this is varibale, in which we will save modal html before open
-            $('#add-book').click(function(){
-               addmodalHtml = $('#add-book-Modal').html();
-               $('#add-book-Modal').modal("show");
+            $('#add-user-button').click(function(){
+               addmodalHtml = $('#addModal').html();
+               $('#addModal').modal("show");
             });
             //Code for close bootstrap modal popup
-            $("#add-book-Modal").on("hidden.bs.modal", function () {
+            $("#addModal").on("hidden.bs.modal", function () {
                //here you can get old html of you modal popup
-               $("#add-book-Modal").html(addmodalHtml);// In this, we are adding old html in modal pop for achieving reset trick
+               $("#addModal").html(addmodalHtml);// In this, we are adding old html in modal pop for achieving reset trick
             });
 
             //-----------------------------------
@@ -357,7 +366,7 @@ session_start();
                </div>
                <div class="card-body">
                <form>
-               <a class="btn btn-primary-add " href="#" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus" style="display: inline;"></i>Thêm</a>
+               <a id = "add-user-button" class="btn btn-primary-add " href="#" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus" style="display: inline;"></i>Thêm</a>
                </form>
                <div class="table-responsive">
                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -384,14 +393,20 @@ session_start();
                                 echo "</thead>";
                                 echo "<tbody>";
                                 while($row = mysqli_fetch_array($result)){
+                                    $dob = date_create($row['dateOfBirth']);
+                                    $dateOfBirth = date_format($dob, "d-m-Y");
+                                    
+                                    $joinedDate = date_create($row['createdDay']);
+                                    $createdDate = date_format($joinedDate, "d-m-Y");
+
                                     echo "<tr>";
                                         echo "<td>" . $row['cardNumber'] . "</td>";
                                         echo "<td>" . $row['readerName'] . "</td>";
                                         echo "<td>" . $row['gender'] . "</td>";
-                                        echo "<td>" . $row['dateOfBirth'] . "</td>";
+                                        echo "<td>" . $dateOfBirth . "</td>";
                                         echo "<td>" . $row['address'] . "</td>";
                                         echo "<td>" . $row['phoneNumber'] . "</td>";
-                                        echo "<td>" . $row['createdDay'] . "</td>";
+                                        echo "<td>" . $createdDate . "</td>";
                                         echo "<td>";
                                             echo "<a class='see' href='#' data-toggle='modal' role='button' data-target='#informModal' data-id=".$row['cardNumber']."><span class='fas fa-fw fa-eye' title='View Record' data-toggle='tooltip'></span></a>";
                                             echo "<a class='edit' href='#' data-toggle='modal' role='button' data-target='#edit-inform-user-Modal' data-id=".$row['cardNumber']."><span class='fas fa-fw fa-pencil-alt' title='Edit Record' data-toggle='tooltip'></span></a>";
@@ -470,7 +485,7 @@ session_start();
                         <div class="col-md-8">
                            <div class="form-text">
                               <label for="inputBirth">Ngày sinh</label>
-                              <input type="text" class="form-info" id="inputBirth" placeholder="Ngày sinh" name="dob">
+                              <input type="date" class="form-info" id="inputBirth" placeholder="Ngày sinh" name="dob">
                            </div>
                         </div>
                         <div class="col-md-8">
@@ -486,7 +501,7 @@ session_start();
                            </div>
                         </div>
                         <div class="col-md-6 ">
-                           <form><img class="card-img card-img-au" src="https://salt.tikicdn.com/cache/200x200/ts/product/16/72/03/48f9819bda92d598cc2fa44452416b27.jpg" alt="Card image cap"></form>
+                           <img class="card-img card-img-au" src="https://salt.tikicdn.com/cache/200x200/ts/product/16/72/03/48f9819bda92d598cc2fa44452416b27.jpg" alt="Card image cap">
                         </div>
                         <div class="col-md-6 ">
                            <div class="custom-file upImage">
@@ -517,7 +532,7 @@ session_start();
                      </button>
                   </div>
                   <div class="modal-body">
-                     <div class="col">
+                     <!-- <div class="col">
                         <img class="float-left " id="imgBookInfo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxETEhUSEhMVFRUVFxUVFxUYFRUVFRUXFxUWFxUVFRUYHSggGB0lHRUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKDg0OGhAQFy0dHR0tLS0tLS0tLS0tKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS4tKzEtLS0rLf/AABEIALYBFQMBIgACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAAFAAIDBAYBBwj/xAA8EAABAwMDAgQDBQYFBQEAAAABAAIRAwQhBRIxQVEGImFxgZGhEzKxwfAUFUJS0eEHI2Jy8TNTgpKiJP/EABgBAAMBAQAAAAAAAAAAAAAAAAABAgME/8QAIBEBAQEAAgMAAwEBAAAAAAAAAAERAjEDEiFBUWEiBP/aAAwDAQACEQMRAD8A9RCcE0JwWjmPSSC6g3UTtD5Qhiv2LsQlV8O1pJJJQ1JJNc8BNNYd0BIuFVat60KGpqTQJ/5PoEFq2QFCazZgESg11XfU5O1v8oOT/uP5KkLXYdzDB79/fup91zx1qmuTjUVG3uQ5ocOv49V2rWgK2VufGf8AGdyRSdHZeIXr3F5kL2HxPqDNpavOq1q1x91nyzWFv1kq7IKntbmMIxqWnBoWYrU3A4RLpyidakH9VWdabeFWouertCjUcYg5QHPtHBGvD944PBJKtaT4fe9w3MPywtnT8GgMkCCpq+PG0d0jUAWjKKCsCsZZUX03Fp6I3RuCOVjbjs4crn0SqMb2Tt8RCG17wBVamo9Fc1ly8saYX4Ays3q2qsJMFUNSvH7JGVjrx1WZhNz8/JopXvyDE5VuxeSJJWXNGpIcThW69y9rfKc9kM2npasxmCRyhOvazSIORwgLaL3iSgd5ZVd5GSEZp9pCGkkpKzZ6U9zcA/JdVaevfQnBNCcF0meF0LgXQgHKxZnKrhS0HZSpzsSCTimscm13wCobB95UJMKqcdUmXAc4p7qM8mEM+1Z5lVKtYA+vT0CsXt01vlb6k+sA4+f4LJX+qjfA5ED2WfKuv/n8VtaWnUlTnAz8+f8AlC9M4lzhn3H1IV24qbR0I5PMR14/FLF88lyE7UBTpAkiN+34loP9UyrqjS3BQjWrc1bR5Zy2oypPpDh09NqzlO92tyeEbY4fNc507xC7cZBWbFwWuRatc78BV6mn4lKVz26p1q+6ZQLUgBkK7dOLSQqlWkaipfHpR0+od3GFuPDL2F43NS8H+HWvcN4wvVrHw5QAEMAj0TbceO/UmkWjIGAiz6YhQ0LHZwuXVQgI6ahNxZtLyUN1GmGjCnu7+CVmtV1kcErK8Zuo5eX5jtxVJxKq1XkCVSbdFxkKpfX8YKphaK2+pBx2FE2WlMiYWEtr8b54laS11AkAAqULl/ZtiABJQapppBWioQYlS1mthB4zpsTGArWmaY3dLgiAqNaJ6Ks/UWQYPsnDlwcpWFOMABJZqh4liQTwkleMqtemBOCaE4LsBwTgmhOCA6E5qaF1Kmh/b9rolVdV1cbYByql7QcXkJM0tnLyHfHp6hZ3aqbXNDovkud93lP1XUy0HbGOE2/vA0bW/IKi9u8Eehx1dg/d+KMxpx44jdVikaxaX7Bx/MSMg+y8+tbo1atZ9RjgA4uG2WwMnmMDp7la6xvHV2G3AcA2W5Hw889cFE9A8MinR21NrnEuLtohpBnGe276KM11cfJ6RD4drtNPzU6zQOPtPNzztODEp95V3EfeLZlsYzxExPPtiURs9KLCTOCJjsYyPbsrjNPpsMk4zj15/JOxHvO1bQqUeQj7zYzkYAj8FR1/w3SrscGwx+YI4n1Rg1mA4IBBj4/opznDH+ox+aqZ0w8k9vrxK6t7i1dtrMc05ORjmBB46T8VJR1kuwvaqT6VUbKjGvAxDmhwn4oNf+BrCo6Ws+xd/ogN/wDXhK8GF8deTX43ZV7w5p+8y5egXH+G9Ijy13fFoP4Fds/BL6I8tRp+YU+tE4X9K9jTFKNq2um3ktErI6hZOoAPeZyBjhPGshrUuu1cb69tybkLP69qUAgIIzXy4YVC7NSoZMovI+Xk/Ssb4ucZWc1lpe/yrSfuzuPiu2GnNJkjIS1nus3YsewZUd7blxkLV6hp3YLO1nlji0paigH7IQUXsnwF2+bgEcptpTJyQjs79EDqDmCVA/xBOEy7qNiEDuKQGeiIUH6+sAtjqgF7cvHHVPt6bTBlGKGmNIyn0fyMrFQ5zlJbB1lTbAhJGn7PXAnhMCeF1GcE4JoTig3VQvqrmZ6fgrVS4AVLULxux04EHkgdEqqBp1A5dk+q6bhxHv8ArlZa11n7QEAmCTnmfQ/1Wis3gNnlTWnGprehJ3O56K0y2AcHCPzVFmotBzgd4JV03IIMH8/j6JKSPpN3F+A50SfplTsqQhFFrnuBmYPywOD9ETfR4kAxHX1lI032h4CZUZ1OOnw/RT2D1/WPyTzSlufb++P1hAUHQMR+jyfqnQXFrgDg94Ed/XhPd26np7Jz3BktJ7jpgAdJ9ITKq1wyCHDGZJ9OeiI1aH2jRDoIj49kL1QQwH2EcRAJ/FXtJe4ie2PhJQCY+qPLnGOFfp0nR5jH4pVajm5Jx9UF1DUySRugf/Xx7JW4V5SKPi6p9rtpsyGmccErO1LTHKNG6aZH6Pueq5UpghZX7XPy+3QnT7aDHZaCk0Rwqdo0A5RSmwFKFxiGu0QqLaga6ERrtACy2q3UPwg7cHatZsSsprbQXSAoXasS4CcInQa1/KX5R2ztUvidqru1GAQMFbS5o0msyvPtYLdxjoU4cinVvTuyVK9rqgEIHcVXSiuk3wbyrq8MqU6tPphWmeIHt5V+6vWPEBANQozEZRPpd9if77J5KSBuovH8JSRivV9Iu1SiP4wfbKiOuUuhJ+CxFC/G3gY6wY/unUbtzzJcGj4T8F0pbYa1T64Vat4gBw3HGSPwQSrctAmWg+x/GEM1S5wDPXJ8wCSsaZl4wnl7u/PPwQvxPT+1t6rWCHFjozzjjlUNPDiJaZBORJj183Jj0RcUJHT9fipV3HkHhjUnNqNacDcM8xkYyV60LjygCSPiD9BGfgvNPFWkfs1yHsbLKjgY5AdPmaew6/8AC3WnVJawRtOOo/GUqfBN9u9pJ2uLfeTnnAn9dk1+ummAT6wD3H4YV2vaiWxv+ZM/EGPXKv29g04JaekkgzHcHghS1gXZeIAXiWPGMiZjGRjMjtlG6eusA8rSf9sT8eqX7opzgQW45DgR0zz/AMJ9vaNbOwCeo7x1z1RoSjU2lu/a5oiSCIgAT05Qev49t6cCrTrt3N3jyAw2Y3Ha4kDjkdQjtYCpTcyYJa5oPYkEA/VeH6xY6lQvawptqlz3nZtYXNc1/wB2CQQAOO2Ecc37U+S2T5HsWkeILa6cPsKocWw4tILXbXSN21wG5vGRhFNXt2v+zEZmcehB4+A+S8ifbVLa502mXf8A6fM+tt6NqE7gQO5Jj/avX6jwwte6eIAS48tVZirrLYY8iARwff1VvTB5WcnHf8UP1OKg2nG4zM9v0EY04RA9OvyH4J6QP4lu3sIbuDQepOfgBlBqbGkfeJ+EfiUT8eUNzWEYIJ6Ss3bXZYBuz7FZ8+3Nzv8ApYdZ+aRu+Y/or9OnAQz96ScBNr3j+ilOxfuKZ5CiN65jZVUX+MoPe6p0QNF/31uBQKpUDnGSomVBEjqh9zVIPogu1S+rlj8IrpN6ZCz11W3ORDS2uwUzs+NBrF2QzHVZ+jpr6gnqjldoc2JRHRtoIBRD4gVDwRVqN3deyz+p6I6iSMiOQV7vZV2BvReZ/wCIdQuqgUxzyUS3XRZxnFi6VMjKtNqtOPqrVKwJbKoOsyCRPstNnTmm6MNq0oEwVxBxRI5SUWf10Tn/ABpnXA3jsOhk8eivVr+pjYD3yI+glNqOYPMYbAjJEmfQdVDa12jDZBnkzGO/Mrp1mIUr14HnBzwAADPcSuPqxO4H2JxnuAOfRK4tiRuLn/A5/wDUiY+Kks7QOB80HmMGPh09v6ICxo2oNBhzY6Ceg/EBFK+qAztDY6EnJ+AOP17rOXFtWpkO5B4zAPaesfFEtOvg4bYl3U7RjEmOI49eUqqVU10tq0y14HHcSPY8yo9BriA2cDEZyO5Pb091PqVnuaSAZySd3T2AWbs6pZU2nygnEnB+HPxUVc7eh13MeGhpaevl+pOOPzU+nv2iREZxJB+AKh0k+QCcfEg+skzCumiNxc2DPIxBHQxCmtIJULsFs5/XqoKtcAyZHfH5wlbx3I9J6pU7Ubi2TnIPBaVOnijeXIkFoPXocdJ9vZN1LT7+sJs7ttKcOZUpU6m096VQtkd4dMenCJjT9ogiTnoo7Tcx0z8AenqnkvZbnTIaD4HdRvBVr1X1qzjuLyZkgdz+owFvb23LyJ4HHuh93UcKzahEc8mIx9UXtqodmcqi7ZnxTqjLOg+u4SWCGME+ZxMNBPQTknsChPgg3l5TdWvQdr3A0qYBYAxmd23nJ7zIC12oWr3Oe5jw0hrYBYHtOSTLTz06jhdtrjazzEucfvEt2+wDegU/wZn0P8RS6AOAPkViqtwN5aeQtReXBcSO6zF/o53Gp8VFu1yc/t06rdsYJwqTtfYXQg2pv6Sg7RBlEhSPRGAObPdDr+wGSodLv/KBKlvrvylKigrroDA9lVrVZkIddPduMJMeRyqxWJ7an5srSWZY1oKyTriFP+2OjlGC8daWpdNlKhdjfgrK0qrp5RC0puJlGJ9W4bemBDlWubWc8lA91RhHZH9NuQ7nlSAe5eQIDUDNXzebEL0g6QHDhAdc8KOglonqq6VmMm/JkLimZZOEg4XVS5BfUrvlrQCckmCfrwmWVL+J/biTx/f8lBf1g5wG6D7bf/GMInpVADJDnYwPvQemCtQtfeAb1/lgwPg70/WFdptcxp47YgY94VfTLdxMkRPGIPpxIRV1s8kAEwMYI5HecpjEDWAwSWu7AucI9vae0oNqFmGPLxAAmQDtI9d/T5I662G6Dz1J/p1+SrvptDnTEdCe89iOZMRGPWUtVgPQ1lv/AE2jHMghwniXYMmMe5xCHatbwN7f+oDv4IEA44jJPr7YyrGqW7GkuY4yCYjI3dhgEnpx79kLN88EbmyOoz1xmMT04U1UbPwx4gNduRD2w1w746N7YWvss5IPqJ+i8qo3MvDqBFN4IJkESTBgycmMfBbzw/q4qeXzGo373lGfWeI9eFK40V1bgtK5p9UE55A/WOikpVJGSPYQfmeFG1xa+WtEdScn+gSz6e/F6o9sCXhk4E9fQA8oKKD21A8XNF8l4DCC2SCSA1245jBweJxwju8kfe9OJHsO6a31DTz/AAwqxOhuvW9Z1uajGNL2jcWTIcBkhrhGYmD3WV8P+LftC5jW5pwagd5XiTgFpHpzK3lxcMYwnytaO5gcIFonhemKz7h5Lg90tpkDYMDJHX8Ai7+FcLx/IhQuC9oeWlpMmD2kgEj15+KqXdcEkfXui+o1mA8jd26kLK6rqDGglvTkenUjuo5MfJz/AAmfSjKp6hWBaR6IS7xGwjlCLnVnOkBRXPeQDfMe6oYHVR1LUhGaDZMwq166TwnKNU6VbaF2peSIVapRKaxkcpnDQ2XcKwbAuCloBquPug0YQduAVXTyF1lHEI02qHcqN9u3mUaPYMt7copajYZXKcBXdrdqWlamY77SAFepj7NDLOoGHKnr3u4pCfOm20evvARm6pDZkIB4Vvae0ArSXlwwt5C0343k2a8y1Nn+YdoxJ/FJaI2DCT7rqk5rD6daOe/e9knu7gDucZKPWtYNPnA7dAB7CCB+OVTsvKZbLndCBI9Z7/NQ3FGu88GPZv8AeFumNRRI6Zn+UT/ZQ3N05hbtaQc/rHCrabY1WmXTgQACQfpj4eqvPqASD5T1O6TzAHI7c4SViZtcPzUABAnoDGJnOPr7Kk1m4moD5RO3ED/xn3OY+S5W27C5hAGAXwXEjkAemOOsJCqW0/KZ6ZjBmJgk55/PhBqL7XblzpmeXN8oMwOOx6QFRfYB5lrT1gl2IEebOB0Mq5+0tqdS8z92CQcjtzPf2T2uc3+AU2l2MS455ImOv1SMEGmtpHdBqEmQGnazHd48zjycQB3KKaTrP2gDKu5j95gDyMGBAIHTPXJTq9Gnucd4gCYEbhPQnqD+SdQ0b+IFjuS0GJJB52kjd0OSAIPcJBqLC8fTA3iewb/EP53H+Fsd+08ZRN2rU4JLhjLnfwsAwY79B6yAJ65PSNReHuo1GOFP+JzyS45+893ETEDjjGUa/dNJw/yzEEOHv0J7EDj+WZ5yp1eCNLW2HDTJyNv8sGDu9QQQfUEfwlXaVwHd1ntKtXUnkPAMnmAMdAPQAQqOteIBSr7GHCesuXL17a67o0nNIeAW9QchUj4gbTqNp8NMeb3wMfELLVfELCMvz+sIRfXAeSQcRH0hTebO+T9NTrdZz21KZP8An0hIP/ep5g/7hC89ra26qYc6Hg4dxu/0u/1dnfArSVtRNWg2sD/m0BtdGC5hmD7yw+whYzX6TXH7enAkgPaMAOIkOA6Bwz6ZHRGM82pfsyTuGBMEdj1Hsj2k7OHLJ2+q7RDs9J79pTxq5mQUrB616SKNItxCzmp0mtcs9b+JHNwSq19rrnuCXrR60acyeEN1B21dpanDUJvrouKchyVZt7qVbdcBZ4V4T/2sqsVg99oeQqtTUCMEqtRvoEFV6nmKJCwVpXqv0rzHKC0qKsMZAkpWHeIqLsTlWRUaQs/XqYRPTaBc2ZSweq9RvnMMtMIk3W6sfeWT1Nzqb4Puof3g4hGDK2Vt4kcAZEpLJ0HuhJPFbWxtLgfwwByTA494z2RRl8BAG2cQfve/GUDbXaYa3Jnq4jnq6JP1UFxXcfKG+kjE+3YcQtlRqDfSJDsNMSIDZ6j9FDaj5d5ngg9IIHywc95/NV9OHliSYgT0bP8AL3P6M8Ih+yMEySYy6TjvHbtOSUlakZVD5AkE9AA3rn8AO+PZQ16DWGCHOB5d/DPQARtb1+infqIb5WAF2IgYPpAMn+6a6xNQ7qp2GPVrgek/THT1QEllvMihTYxvBcZcY4iMScd8KxUsWtMPrPcRyAYz0xGB/dP+0FCnDWs2ACMZ6Gfb7v8AVATY1rp5d9o4U+gAgHvkc/kkcPu7m3afNL3fy7iRgyN0du0dPm6zpValUPFKo0EZJ4g9wePhnsjum6bQpfdaMdY5I9enVFNMqbml2R6e/okZadpryzMNGIkScdSPwE4n536FgR92ERtiNgKnogESEsPQO+xG7BC8U8fXDm3b9uJg89xK+gry1a5vmXiv+KOgGldbxJZVEgnoeo/BP8MfJ3rB/tNUmZKO2F2/bBU1ppzSOFZqtY1vRZ7rO13Qb4trBp+7UFSm4dwQCP8A6aPmhlZ20uaeCCw+oBlp+BhS2jmio13ZwPyIKZekEmE9ABUlcplWbyAqD6ypXaSuo6b1C+oSo5KZ4JtrqY05EoRTcZRq1qYSKxUdSUexW6oTqdFA1SIKeypCvsoBR17SUaNMpXBlXnVpCouowuNeUgmLTK02ivAGVmw08onaVSBhKlaJ6zZNf5uyzjWAFFLi9cRCD1HmYRBLonbuBC6lp9N0FJMxWyuu8DbJySA3uT07qMV99QFpwTjEADMnKo1HhoiIEAR1Md/12SZdbfN1I59Ac7fcrVTW0LpjYwScQc+gmOT/AMZCs1q4LWzI5MHHSchZOwvHE7zye/DJHQDgx8cq/uLz5ifj0GMenA+fwSMdpmXeSMw3dAmRzB6AH+qsfaCnuPIEE93mMAnp3MdSEPFfYNwMHPPQcT+u59VDtdVO1xMFwOcSBLnfPCD1NTNS6q/ysk9eR1/EZ9Vp6lVlvSIGNoEevp7ofZURTbuHAE9oHJHt1Q0XRuKg3OAAgxMzggfnPsg9HbRrvsXF2ZO7pweym0isQ0sntOe4wf12TK1wNpacw3B9eQD6cfMqvojmy5xOD3wYIx+aQ1rdPrBrdp/Uq3b1gGnPKyTdSpipt3ieORnJEItS3uhrQYHJ4B9Qnhey9f3u1nrIhAvG1mLiyL481Pzj2HKNVNO3jzHPf+ykND/LdTI5aQe3CVg7j55rantOCqj7wuTtSsSyo9p6OI+RVLbCiRktuqwFTdfGcp7iSFUq0k8OOXNxuVYrtRiiTVD04FRLsphK0q9avQ+mpwSEiopVe1JlwEJfVKfSJSwsH7aCrJYEHtriFfF1hTYjFhtrvwEXp+DXlu4KjpVyGvBK9P0vUabqcBTbY28fGW/Xk7tNe1xaRwnCkW4K3OofZ7ycLNanSnIHVPUcplwPotHVdZpwcVE+iWnJRC0ughNGLPTm7QElPb3whJBawNapvnv2+cD6KSlULvL0AifTv81WFJ2QGmfQZOFft9IuXCGUahMAfdIHPqtmu4sWtwxrcHr8z+vzRCnqzGNjAyDHc9fof+SorLwbfP5pRnBLgPSefdFbT/DW5d9+oxoPYFxHzjKeUvaAztaL8gCJwOc+p79SUQt7/wAxL3iGwI4HQYPaYWlsv8MaQAD6r3DqBDQfln6o3Z+AbJoE0tx7uJcfqjC9mQuvEDfsy1rhJA75kREe3X0KrWdK6e5ppUKhAmSRtBlziefdeq2mh0KeGU2COIaFebQA4CPg2vO6Xh7UK0h7mUgYBjzO46FE9P8AAbRP21WpUnpuLR7QCts1ieGoATY6Db0vuU2g8zGZ7yijaaka1PhByGhqVWjuBHpAKeFIkp4N4u0CrQqu+0bG4lwcMtcPQ/ksZWp5X0/rOkUrmk6lVEg8H+Jp6OaehXz34w8NXFjW+zq5a6SyoB5Xj8j3b0+qn1xGZWdquhQGqFNXZKrikkFesoVddTUT6SZqriuKRzFHCZpqZTn1VGFxIEHK7bCVRhWaD4QVEW0gnVD2VZ1bCVJ5KRYIWdXK0FtqrmCAVnaDVZdUjlITsYt70ufkq9qV00Mx95ZI3BHCbUunHkow1u4uSUy3qEFUqVQzCPWOn7hKCcp3ZSRCjpOEkix6R4P09htKD3NbudTaZAHUA8wtBTtWjgBJJdBYmFEKRrAkkkZ7WrsJJJGcAugLqSDdhdhJJAOhKUkkjOTgupJqdCpazpFC6pGjXYHsOexBHDmkZafUJJJE+dPG/h91hcuoF4e0jex3B2EmA4fzY6Y/BAA5JJTWcQ1VXc5JJCojcUyUkkzT06chR1AkkkUKm2UX07TNx5SSSoorV0QRyrNpozQEklnrK1Zpaa2VDe2AjCSSJRKos07PKgvrUNj1SSTl+ripSGZRyx1ItgQkkrgtHaepEjhJJJST/9k=" alt="">
                      </div>
                      <form>
@@ -574,7 +589,8 @@ session_start();
                               <a class="btn btn-primary" href="book.html">Chấp nhận</a>
                            </div>
                         </div>
-                     </form>
+                     </form> -->
+                     <div class="spinner-border text-success" style="margin: 0 auto;"></div>
                   </div>
                </div>
             </div>
@@ -593,6 +609,7 @@ session_start();
                      </button>
                   </div>
                   <div class="modal-body">
+                     <div class="spinner-border text-success" style="margin: 0 auto;"></div>
                      <!--php lo-->
                   </div>
                </div>

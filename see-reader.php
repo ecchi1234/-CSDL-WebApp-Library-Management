@@ -16,11 +16,18 @@
 
                 $readerName=$row['readerName'];
                 $gender=$row['gender'];
+
                 $dateOfBirth=$row['dateOfBirth'];
+                $date = date_create($dateOfBirth);
+                $dateOfBirth=date_format($date, "d-m-Y");
+
                 $address=$row['address'];
                 $phoneNumber=$row['phoneNumber'];
-                $createdDay=$row['createdDay'];
 
+                $createdDay=$row['createdDay'];
+                $date = date_create($createdDay);
+                $createdDay = date_format($date, "d-m-Y");
+                
                 $response="<div class='row'>";
                 $response.="<div class='col-md-7 align-self-center'>";
                 if ($gender == "Nam"){

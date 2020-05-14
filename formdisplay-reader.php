@@ -43,7 +43,7 @@
                    $response.="<div class='form-row'>";
                    $response.="<div class='col-md-12 mb-3 '>";
                    $response.="<p class='label-pb' for='dob'>Ngày sinh</p>";
-                   $response.="<input type='text' class='form-control form-control-eu' id='dob' name='dateOfBirth' value='".$dateOfBirth."' required>";
+                   $response.="<input type='date' class='form-control form-control-eu' id='dob' name='dateOfBirth' value='".$dateOfBirth."' required>";
                    $response.="</div>";
                    $response.="</div>";
                    $response.="<div class='form-row'>";

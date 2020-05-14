@@ -38,7 +38,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($input_dob)){
         $dob_err = "Please enter your date of birth.";
     }else{
-        $dob = $input_dob;
+        $dob_formatted = date_create($input_dob);
+        $dob = date_format($dob_formatted, "Y-m-d");
     }
 
     // Validate publisher name
@@ -69,13 +70,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // echo $quantity_err;
     // Check input errors before inserting in database
     if(empty($bookImage_err) && empty($readerName_err) && empty($address_err) && empty($dob_err) 
-    && empty($gender_err) && empty($phoneNumber_err) && empty($quantity_err)){
+    && empty($gender_err) && empty($phoneNumber_err)){
         $sql0 = "INSERT INTO card (createdDay, expiredDay) VALUES (DATE(NOW()), ADDDATE(DATE(NOW()), INTERVAL 2 YEAR))";
         if($result = mysqli_query($link, $sql0)){
             $last_id = mysqli_insert_id($link);
             // Prepare an insert statement
             $sql = "INSERT INTO reader (cardNumber, readerName, address, dateOfBirth, gender, phoneNumber) VALUES (".$last_id.", ?, ?, ?, ?, ?)";
-            
+            echo "success";
             if($stmt = mysqli_prepare($link, $sql)){
                 // Bind variables to the prepared statement as parameters
                 mysqli_stmt_bind_param($stmt, "sssss", $param_readerName, $param_address, $param_dob, $param_gender, $param_phoneNumber);

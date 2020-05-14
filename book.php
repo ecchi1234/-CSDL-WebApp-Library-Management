@@ -28,7 +28,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       <script type="text/javascript">
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();
+            var seemodalhtml = "";
             $('.see').click(function(){
+               seemodalhtml = $("#see-informbook-Modal").html();
                var bookCode = $(this).data('id');
                // AJAX request
                $.ajax({
@@ -44,6 +46,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                   }
                })
             });
+
+            $("#see-informbook-Modal").on("hidden.bs.modal", function () {
+               //here you can get old html of you modal popup
+               $("#see-informbook-Modal").html(seemodalhtml);// In this, we are adding old html in modal pop for achieving reset trick
+            });
+
+            console.log(seemodalhtml);
 
             $('.edit').click(function(){
                var bookCode = $(this).data('id');
@@ -98,7 +107,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
          <!-- Sidebar -->
          <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="reader.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="book.php">
                <div class="sidebar-brand-icon ">
                   <i class="fas fa-book"></i>
                </div>
@@ -364,10 +373,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                      <div class="card-body">
                         <div class="col-sm-12 col-md-6">
                               <div id="dataTable_filter" class="dataTables_filter">
-                                 <form>
-                                    <a class="btn btn-primary-add " href="#" data-toggle="modal" data-target="#add-book-Modal" id="add-book"><i class="fas fa-plus" style="display: inline;"></i>Thêm</a>
-                                 </form>
                               </div>
+                              <form>
+                                 <a class="btn btn-primary-add " href="#" data-toggle="modal" data-target="#add-book-Modal" id="add-book"><i class="fas fa-plus" style="display: inline;"></i>Thêm</a>
+                              </form>
                         </div>
                         <div class="table-responsive">
                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -584,6 +593,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                   </button>
                </div>
                <div class="modal-body">
+                  <div class="spinner-border text-success" style="margin: 0 auto;"></div>
                   <!--php cũng lo chỗ này rồi-->
                </div>
             </div>
