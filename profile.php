@@ -278,7 +278,7 @@
                                  <div class="form-group row">
                                     <label for="name-profile" class="col-sm-3 col-form-label label-pb">Tên người dùng</label>
                                     <div class="col-sm-8">
-                                       <input type="text" class="form-control"  value= <?php echo $readername; ?> required id="name-profile" placeholder="Tên người dùng">
+                                       <input type="text" class="form-control"  value= "<?php echo $readername; ?>" required id="name-profile" placeholder="Tên người dùng">
                                     </div>
                                  </div>
                                  <!--Giới tính-->
@@ -287,13 +287,13 @@
                                     $query = mysqli_query($link, $sql1);
                                     ?>
                                  <?php $row1 = mysqli_fetch_array($query);
-                                    $genDer = $row1['gender']; 
+                                    $gender = $row1['gender']; 
                                     ?> 
                                  <div class="form-group row">
                                     <label for="gender-profile" class="col-sm-3 col-form-label label-pb">Giới tính</label>
                                     <div class="col-sm-8">
                                        <select class="form-control" id="gender-profile" >
-                                          <option value= <?php echo $genDer; ?> selected ><?php echo $genDer; ?></option>
+                                          <option value= "<?php echo $gender; ?>" selected ><?php echo $gender; ?></option>
                                           <option>Nữ</option>
                                           <option>Nam</option>
                                        </select>
