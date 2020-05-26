@@ -25,6 +25,7 @@
       <link href="https://fonts.google.com/specimen/Montserrat" rel="stylesheet">
       <!-- Custom styles for this template-->
       <link href="./css/lib.css" rel="stylesheet">
+      <link rel="stylesheet" href="v/datatables/dataTables.bootstrap4.min.css">
       <!--This need to be on top of this html-->
       <script src="./v/jquery/jquery.min.js"></script>
       <script src="./js/sb-admin-2.min.js"></script>
