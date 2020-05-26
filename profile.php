@@ -1,6 +1,14 @@
 <?php
    // start session
-   session_start(); ?>
+   session_start(); 
+
+   // Check if the user is logged in, if not then redirect him to login page
+   if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+      header("location: index.php");
+      exit;
+   }
+   
+?>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -254,8 +262,10 @@
                                  <!--Tên đăng nhập-->
                                  <?php
                                     require_once "config.php";
-                                    $sql1 = "SELECT userName FROM reader";
+                                    $sql1 = "SELECT userName FROM reader WHERE cardNumber=".$_SESSION['id'];
+                                    echo $_SESSION['id'];
                                     $query = mysqli_query($link, $sql1);
+                                    
                                     ?>
                                  <?php $row1 = mysqli_fetch_array($query);
                                     $username = $row1['userName']; 
@@ -263,7 +273,7 @@
                                  <div class="form-group row">
                                     <label for="user-profile" class="col-sm-3 col-form-label label-pb">Tên đăng nhập</label>
                                     <div class="col-sm-8">
-                                       <input type="text" class="form-control" value= <?php echo $username; ?> required  id="user-profile" placeholder="Tên đăng nhập">
+                                       <input type="text" class="form-control" value= <?php echo $username; ?> required id="user-profile" placeholder="Tên đăng nhập">
                                     </div>
                                  </div>
                                  <p style=" font-weight: 900;">Thông tin chi tiết</p>
@@ -306,7 +316,8 @@
                                     ?>
                                  <?php $row1 = mysqli_fetch_array($query);
                                     $dob = date_create($row1['dateOfBirth']);
-                                    $dateofbirth = date_format($dob, "d-m-Y");
+                                    // $dateofbirth = date_format($dob, "m-d-Y");
+                                    $dateofbirth = $row1['dateOfBirth'];
                                     ?> 
                                  <div class="form-group row">
                                     <label for="birth-profile" class="col-sm-3 col-form-label label-pb">Ngày sinh</label>
@@ -371,7 +382,6 @@
                                  </div>
                               </div>
                            </div>
-                           ?>
                         </div>
                      </div>
                   </div>
@@ -405,15 +415,15 @@
       </div>
       </div>
       <!-- Bootstrap core JavaScript-->
-      <script src="vendor/jquery/jquery.min.js"></script>
-      <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="v/jquery/jquery.min.js"></script>
+      <script src="v/bootstrap/js/bootstrap.bundle.min.js"></script>
       <!-- Core plugin JavaScript-->
-      <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+      <script src="v/jquery-easing/jquery.easing.min.js"></script>
       <!-- Custom scripts for all pages-->
       <script src="js/sb-admin-2.min.js"></script>
       <!-- Page level plugins -->
-      <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-      <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+      <script src="v/datatables/jquery.dataTables.min.js"></script>
+      <script src="v/datatables/dataTables.bootstrap4.min.js"></script>
       <!-- Page level custom scripts -->
       <script src="js/demo/datatables-demo.js"></script>
    </body>

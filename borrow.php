@@ -1,16 +1,3 @@
-<?php
-   // start session
-   session_start(); 
-
-   // check login
-
-   if(!isset($_SESSION["aloggedin"]) || $_SESSION["aloggedin"] !== true){
-      header("location: adminlogin.php");
-      exit;
-  }
-   
-?>
-
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -25,7 +12,6 @@
       <link href="https://fonts.google.com/specimen/Montserrat" rel="stylesheet">
       <!-- Custom styles for this template-->
       <link href="css/lib.css" rel="stylesheet">
-      <link rel="stylesheet" href="v/datatables/dataTables.bootstrap4.min.css">
    </head>
    <body id="page-top">
       <!-- Page Wrapper -->
@@ -247,7 +233,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-blue-600 "><?php echo htmlspecialchars($_SESSION["admin"]); ?></span>
+                <span class="mr-2 d-none d-lg-inline text-blue-600 ">Góc của Bư</span>
                 <img class="img-profile rounded-circle" src="https://kenh14cdn.com/thumb_w/620/2018/5/16/3189533012638884437482503274448191335956480n-15264802105001243615494.jpg">
               </a>
               <!-- Dropdown - User Information -->
@@ -278,53 +264,140 @@
                <!-- Begin Page Content -->
                <div class="container-fluid">
                   <!-- DataTales Example -->
-                  <div class="card shadow mb-4">
+                  <div class="card shadow mb-4 ">
                      <div class="card-header py-3">
-                        <h3 class="m-0 font-weight-bold text-primary">QUẢN LÝ MƯỢN TRẢ</h3>
+                        <h3 class="m-0 font-weight-bold text-primary">QUẢN LÝ MƯỢN SÁCH</h3>
                      </div>
-                     <div class="card-body">
-                        <div class="table-responsive">
-                           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                              <thead>
-                                 <tr>
-                                    <th>Mã số thẻ</th>
-                                    <th>Tên độc giả</th>
-                                    <th>Nhân viên trực quản</th>
-                                    <th>Số lượng mượn</th>
-                                    <th>Ngày mượn</th>
-                                    <th>Ngày trả</th>
-                                 </tr>
-                              </thead>
-                              <tfoot>
-                                 <tr>
-                                    <th>Mã số thẻ</th>
-                                    <th>Tên độc giả</th>
-                                    <th>Nhân viên trực quản</th>
-                                    <th>Số lượng mượn</th>
-                                    <th>Ngày mượn</th>
-                                    <th>Ngày trả</th>
-                                 </tr>
-                              </tfoot>
-                              <tbody>
-                                 <tr>
-                                    <td>18021198</td>
-                                    <td>Nguyễn Phương Thảo</td>
-                                    <td>Nguyễn Ngọc Chi</td>
-                                    <td>1</td>
-                                    <td>26/04/2020</td>
-                                    <td>27/04/2020</td>
-                                 </tr>
-                              </tbody>
-                           </table>
+                     <div class="card-body card-body-book">
+                        <div class="row row-book">
+                           <div class="col mt-3">
+                              <div class="card" style="width: 20rem;">
+                                 <img class="card-img-top" src="https://salt.tikicdn.com/cache/200x200/ts/product/b6/40/0e/fadbb2c98682dc74da8c1cf717f25ead.jpg" alt="Card image cap">
+                                 <h5 class="card-title name-book">Những cuộc phiêu lưu của Sherlock Holmes</h5>
+                                 <div class="row">
+                                    <p> <a class="btn btn-primary btn-primary-book" data-toggle="collapse" href="#book-detail-1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Chi tiết</a></p>
+                                    <p> <a class="btn btn-danger btn-danger-book" data-toggle="collapse" href="#book-detail" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Mượn</a></p>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col">
+                                    <div class="collapse multi-collapse" id="book-detail-1">
+                                       <div class="card card-body-book-detail">
+                                          <p class="card-text card-text-book">Tác giả: Arthur Conan Doyle</p>
+                                          <p class="card-text card-text-book">Thể loại: Trinh thám</p>
+                                          <p class="card-text card-text-book">Nhà xuất bản: Văn học</p>
+                                          <p class="card-text card-text-book">Thời hạn: 50 ngày</p>
+                                          <p class="card-text card-text-book">Tình trạng: Còn sách</p>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col mt-3">
+                              <div class="row">
+                                 <div class="card" style="width: 20rem;">
+                                    <img class="card-img-top" src="https://salt.tikicdn.com/cache/200x200/ts/product/b6/40/0e/fadbb2c98682dc74da8c1cf717f25ead.jpg" alt="Card image cap">
+                                    <h5 class="card-title name-book">Những cuộc phiêu lưu của Sherlock Holmes</h5>
+                                    <div class="row">
+                                       <p> <a class="btn btn-primary btn-primary-book" data-toggle="collapse" href="#book-detail-2" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Chi tiết</a></p>
+                                       <p> <a class="btn btn-danger btn-danger-book" data-toggle="collapse" href="#book-detail" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Mượn</a></p>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col">
+                                       <div class="collapse multi-collapse" id="book-detail-2">
+                                          <div class="card card-body-book-detail">
+                                             <p class="card-text card-text-book">Tác giả: Arthur Conan Doyle</p>
+                                             <p class="card-text card-text-book">Thể loại: Trinh thám</p>
+                                             <p class="card-text card-text-book">Nhà xuất bản: Văn học</p>
+                                             <p class="card-text card-text-book">Thời hạn: 50 ngày</p>
+                                             <p class="card-text card-text-book">Tình trạng: Còn sách</p>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col mt-3">
+                              <div class="card" style="width: 20rem;">
+                                 <img class="card-img-top" src="https://salt.tikicdn.com/cache/200x200/ts/product/b6/40/0e/fadbb2c98682dc74da8c1cf717f25ead.jpg" alt="Card image cap">
+                                 <h5 class="card-title name-book">Những cuộc phiêu lưu của Sherlock Holmes</h5>
+                                 <div class="row">
+                                    <p> <a class="btn btn-primary btn-primary-book" data-toggle="collapse" href="#book-detail-3" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Chi tiết</a></p>
+                                    <p> <a class="btn btn-danger btn-danger-book" data-toggle="collapse" href="#book-detail" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Mượn</a></p>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col">
+                                    <div class="collapse multi-collapse" id="book-detail-3">
+                                       <div class="card card-body-book-detail">
+                                          <p class="card-text card-text-book">Tác giả: Arthur Conan Doyle</p>
+                                          <p class="card-text card-text-book">Thể loại: Trinh thám</p>
+                                          <p class="card-text card-text-book">Nhà xuất bản: Văn học</p>
+                                          <p class="card-text card-text-book">Thời hạn: 50 ngày</p>
+                                          <p class="card-text card-text-book">Tình trạng: Còn sách</p>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col mt-3">
+                              <div class="card" style="width: 20rem;">
+                                 <img class="card-img-top" src="https://salt.tikicdn.com/cache/200x200/ts/product/b6/40/0e/fadbb2c98682dc74da8c1cf717f25ead.jpg" alt="Card image cap">
+                                 <h5 class="card-title name-book">Những cuộc phiêu lưu của Sherlock Holmes</h5>
+                                 <div class="row">
+                                    <p> <a class="btn btn-primary btn-primary-book" data-toggle="collapse" href="#book-detail-3" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Chi tiết</a></p>
+                                    <p> <a class="btn btn-danger btn-danger-book" data-toggle="collapse" href="#book-detail" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Mượn</a></p>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col">
+                                    <div class="collapse multi-collapse" id="book-detail-3">
+                                       <div class="card card-body-book-detail">
+                                          <p class="card-text card-text-book">Tác giả: Arthur Conan Doyle</p>
+                                          <p class="card-text card-text-book">Thể loại: Trinh thám</p>
+                                          <p class="card-text card-text-book">Nhà xuất bản: Văn học</p>
+                                          <p class="card-text card-text-book">Thời hạn: 50 ngày</p>
+                                          <p class="card-text card-text-book">Tình trạng: Còn sách</p>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
                         </div>
+                        </div>
+                        <nav aria-label="Page navigation example">
+                           <ul class="pagination justify-content-center">
+                              <li class="page-item disabled">
+                                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                              </li>
+                              <li class="page-item"><a class="page-link" href="#">1</a></li>
+                              <li class="page-item"><a class="page-link" href="#">2</a></li>
+                              <li class="page-item"><a class="page-link" href="#">3</a></li>
+                              <li class="page-item"><a class="page-link" href="#">4</a></li>
+                              <li class="page-item"><a class="page-link" href="#">5</a></li>
+                              <li class="page-item"><a class="page-link" href="#">6</a></li>
+                              <li class="page-item"><a class="page-link" href="#">7</a></li>
+                              <li class="page-item"><a class="page-link" href="#">8</a></li>
+                              <li class="page-item"><a class="page-link" href="#">9</a></li>
+                              <li class="page-item"><a class="page-link" href="#">10</a></li>
+                              <li class="page-item"><a class="page-link" href="#">11</a></li>
+                              <li class="page-item"><a class="page-link" href="#">12</a></li>
+                              <li class="page-item"><a class="page-link" href="#">13</a></li>
+                              <li class="page-item">
+                                 <a class="page-link" href="#">Next</a>
+                              </li>
+                           </ul>
+                        </nav>
                      </div>
                   </div>
                </div>
-               <!-- /.container-fluid -->
             </div>
-            <!-- End of Footer -->
+            <!-- /.container-fluid -->
          </div>
-         <!-- End of Content Wrapper -->
+         <!-- End of Footer -->
+      </div>
+      <!-- End of Content Wrapper -->
       </div>
       <!-- End of Page Wrapper -->
       <!-- Logout Modal-->
@@ -340,7 +413,7 @@
                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                <div class="modal-footer">
                   <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                  <a class="btn btn-primary" href="index.p">Logout</a>
+                  <a class="btn btn-primary" href="login.html">Logout</a>
                </div>
             </div>
          </div>

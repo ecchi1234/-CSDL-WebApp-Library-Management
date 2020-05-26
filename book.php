@@ -55,7 +55,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
             console.log(seemodalhtml);
 
+            var editmodalHtml = ""; // save old modal
             $('.edit').click(function(){
+               editmodalHtml = $("#edit-informbook-Modal").html();
                var bookCode = $(this).data('id');
                // AJAX request
                $.ajax({
@@ -70,6 +72,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                      //  $('#edit-informbook-Modal').modal('show'); 
                   }
                })
+            });
+
+            $("#edit-informbook-Modal").on("hidden.bs.modal", function(){
+               // get old html
+               $("#edit-informbook-Modal").html(editmodalHtml); // adding old html
             });
             //------------------------------------
             //Code for open bootstrap modal pop up
@@ -375,9 +382,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         <div class="col-sm-12 col-md-6">
                               <div id="dataTable_filter" class="dataTables_filter">
                               </div>
-                              <form>
-                                 <a class="btn btn-primary-add " href="#" data-toggle="modal" data-target="#add-book-Modal" id="add-book"><i class="fas fa-plus" style="display: inline;"></i>Thêm</a>
-                              </form>
+                              
+                              <a class="btn btn-primary-add mb-3" href="#" data-toggle="modal" data-target="#add-book-Modal" id="add-book"><i class="fas fa-plus" style="display: inline;"></i>Thêm</a>
+                              
                         </div>
                         <div class="table-responsive">
                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -614,6 +621,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                   </button>
                </div>
             <div class="modal-body">
+               <div class="spinner-border text-success" style="text-align: center;"></div>
                <!--php lo chỗ này rồi-->
             </div>
             <!--Hết modal body-->

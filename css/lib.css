@@ -217,7 +217,7 @@
   margin-bottom: 0.5rem;
   font-weight: 600;
   }
-  .label-pb#createDay{
+  /* .label-pb#createDay{
   margin-left: 315px;
   }
   .label-pb#expiredDay{
@@ -249,7 +249,7 @@
   }
   .label-pb#expired{
   margin-left: 315px;
-  }
+  } */
   .label-profile{
   display: inline-block;
   font-weight: 800;
@@ -1055,9 +1055,9 @@
   flex: 0 0 100%;
   max-width: 100%;
   }
-  .col-pb{
+  /* .col-pb{
   margin-top: -36px;
-  }
+  } */
   .order-md-first {
   order: -1;
   }
@@ -1768,21 +1768,21 @@
   border: 1px solid #d1d3e2;
   border-radius: 0.35rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  margin-left: 40px;
+  /* margin-left: 40px; */
   }
   .form-control.form-control-gender-card{
   margin-left: 0px;
   width: 140px;
   }
   .form-control.form-control-gender{
-  margin-left: 315px;
+  /* margin-left: 315px; */
   width: 150px;
   }
   .form-control.form-control-pb2{
   width: 94%;
   }
   .form-control.form-control-pb{
-  margin-left: 315px;
+  /* margin-left: 315px; */
   width: 61%;
   }
   .form-control.form-control-eu{
@@ -2302,7 +2302,6 @@
   color: #fff;
   background-color: #31dc89;
   border-color: #31dc89;
-  margin-left: 147vh;
   }
   .btn-primary:hover {
   color: #fff;
@@ -4150,7 +4149,6 @@
   color: black
   }
   .card-body.card-body-book{
-  height: 90vh;
   overflow: auto;
   }
   .card.card-body-book-detail{

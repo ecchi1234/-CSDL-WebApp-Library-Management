@@ -30,9 +30,11 @@
                 $category=$categoryName;
                 $publisher=$publisherName;
 
-                $response='<div class="col">';
+                $response='<div class="row">';
+                $response.='<div class="col-4">';
                 $response.="<img class='float-left' id='imgBookInfo' src='".$bookImage."' alt=''>";
                 $response.="</div>";
+                $response.='<div class="col">';
                 $response.="<form action='update-book.php' method='post'>";
                 $response.="<input type='hidden' value='".$bookCode."' name='id'></input>";
                 // Tác giả
@@ -97,9 +99,11 @@
                    $response.="</div>";
 
 
-                   $response.="<div class='form-group'>";
-                   $response.="<label>Ảnh sách</label>";
-                   $response.="<input type='text' name='bookImage' class='form-control' value=''>";
+                   $response.="<div class='form-row'>";
+                   $response.="<div class='col-md-12 mb-3 form-group'>";
+                   $response.="<p class='label-pb' id='bookImage'>Ảnh sách</p>";
+                   $response.="<input type='text' name='bookImage' class='form-control form-control-pb2' value=''>";
+                   $response.="</div>";
                    $response.="</div>";
                    $response.="<div class='form-row'>";
                    $response.="<div class='col-md-12 mb-3 col-pb'>";
@@ -126,7 +130,8 @@
                    $response.="</div>";
                    $response.="</div>";
                    $response.=" </form>";
-
+                   $response.="</div>";
+                   $response.="</div>";
                 echo $response;
 
             }

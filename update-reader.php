@@ -33,7 +33,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     if(empty($input_gender)){
         $gender_err = "Please choose gender";
     }else{
-        $gender = intval($input_gender);
+        $gender = $input_gender;
     }
 
     // Validate style name
@@ -41,7 +41,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     if(empty($input_dateOfBirth)){
         $dateOfBirth_err = "Please choose birthday";
     }else{
-        $dateOfBirth = intval($input_dateOfBirth);
+        $dateOfBirth = $input_dateOfBirth;
     }
 
     // Validate publisher name
@@ -49,7 +49,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     if(empty($input_address)){
         $address_err = "Please choose address";     
     } else{
-        $address = intval($input_address);
+        $address = $input_address;
     }
     // Validate publish year
     $input_phoneNumber = trim($_POST["phoneNumber"]);
@@ -58,7 +58,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     } elseif(!ctype_digit($input_phoneNumber)){
         $phoneNumber_err = "Please enter a positive integer value.";
     } else{
-        $phoneNumber = intval($input_phoneNumber);
+        $phoneNumber = $input_phoneNumber;
     }
     
     // Check input errors before inserting in database
@@ -68,7 +68,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $sql= "UPDATE reader SET readerName=?, gender=?, dateOfBirth=?, address=?, phoneNumber=? WHERE cardNumber=?";
         if($stmt = mysqli_prepare($link, $sql)){
             // // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssssi", $param_readerName, $param_gender, $param_dateOfBirth, $param_address, $param_phoneNumber, $param_cardNumber);
+            mysqli_stmt_bind_param($stmt, "ssssss", $param_readerName, $param_gender, $param_dateOfBirth, $param_address, $param_phoneNumber, $param_cardNumber);
             // Set parameters
             $param_readerName = $readerName;
             $param_gender = $gender;

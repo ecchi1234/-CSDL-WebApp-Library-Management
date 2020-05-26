@@ -20,8 +20,13 @@
                 $createdDay=$row['createdDay'];
 
                 $response="<div class='row'>";
-                $response.="<div class='col-2'>";
-                $response.=" <img class='float-left' id='imgReaderInfo' style='width: 180px; height: 180px;' src='./img/social.png'>";
+                $response.="<div class='col-3'>";
+                if ($gender == "Nữ"){
+                    $response.="<img class='float-left' id='imgReaderInfo' style='width: 180px; height: 180px;' src='./img/girl.png'>";
+                }
+                else{
+                    $response.="<img class='float-left' id='imgReaderInfo' style='width: 180px; height: 180px;' src='./img/social.png'>";
+                }
                 $response.="</div>";
                 $response.="<div class='col'>";
                 $response.="<form action='update-reader.php' method='post'>";

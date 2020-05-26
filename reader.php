@@ -16,6 +16,7 @@ session_start();
       <link href="https://fonts.google.com/specimen/Montserrat" rel="stylesheet">
       <!-- Custom styles for this template-->
       <link href="./css/lib.css" rel="stylesheet">
+      <link rel="stylesheet" href="v/datatables/dataTables.bootstrap4.min.css">
       <!--This need to be on top of this html-->
       <script src="./v/jquery/jquery.min.js"></script>
       <script src="./js/sb-admin-2.min.js"></script>
@@ -47,8 +48,9 @@ session_start();
             });
 
             //-------------------------------------------------------------------
-
+            var editmodalHtml = "";
             $('.edit').click(function(){
+               editmodalHtml = $("#edit-inform-user-Modal").html();
                var cardNumber = $(this).data('id');
                // AJAX request
                $.ajax({
@@ -64,6 +66,10 @@ session_start();
                   }
                })
             });
+
+            $("#edit-inform-user-Modal").on("hidden.bs.modal", function(){
+               $("#edit-inform-user-Modal").html(editmodalHtml);
+            })
             //------------------------------------
             //Code for open bootstrap modal pop up
             var addmodalHtml = ""; // this is varibale, in which we will save modal html before open
@@ -366,7 +372,7 @@ session_start();
                </div>
                <div class="card-body">
                <form>
-               <a id = "add-user-button" class="btn btn-primary-add " href="#" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus" style="display: inline;"></i>Thêm</a>
+               <a id = "add-user-button" class="btn btn-primary-add mb-3" href="#" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus" style="display: inline;"></i>Thêm</a>
                </form>
                <div class="table-responsive">
                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

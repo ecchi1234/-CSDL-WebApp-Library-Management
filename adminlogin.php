@@ -3,8 +3,8 @@
 session_start();
  
 // Check if the user is already logged in, if yes then redirect him to welcome page
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: reader-dashboard.php");
+if(isset($_SESSION["aloggedin"]) && $_SESSION["aloggedin"] === true){
+    header("location: dashboard.php");
     exit;
 }
  
@@ -19,10 +19,10 @@ $username_err = $password_err = "";
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
     // Check if username is empty
-    if(empty(trim($_POST["username"]))){
+    if(empty(trim($_POST["admin"]))){
         $username_err = "Please enter username.";
     } else{
-        $username = trim($_POST["username"]);
+        $username = trim($_POST["admin"]);
     }
     
     // Check if password is empty
@@ -35,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT cardNumber, userName, passWord FROM reader WHERE userName = ?";
+        $sql = "SELECT librarianCode, adminName, passWord FROM librarian WHERE adminName = ?";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -59,13 +59,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             session_start();
                             
                             // Store data in session variables
-                            $_SESSION["loggedin"] = true;
+                            $_SESSION["aloggedin"] = true;
                             $_SESSION["id"] = $id;
-                            $_SESSION["username"] = $username;
+                            $_SESSION["admin"] = $username;
                             $_SESSION["msg"] = "";                            
                             echo "test3";
                             // Redirect user to welcome page
-                            header("location: reader-dashboard.php");
+                            header("location: dashboard.php");
                         } else{
                             // Display an error message if password is not valid
                             $password_err = "The password you entered was not valid.";
@@ -129,11 +129,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="p-5">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">DEADLIB</h1>
-                    <h4 class="mb-3">Member Login</h4>
+                    <h4 class="mb-3">Admin Login</h4>
                   </div>
                   <form class="user" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                     <div class="form-group">
-                      <input type="text" name="username" class="form-control form-control-user" id="exampleInputUsername" aria-describedby="usernameHelp" placeholder="Enter username...">
+                      <input type="text" name="admin" class="form-control form-control-user" id="exampleInputUsername" aria-describedby="usernameHelp" placeholder="Enter username...">
                     </div>
                     <div class="form-group">
                       <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
@@ -158,10 +158,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="adminlogin.php">Sign-in as Admin?</a>
-                  </div>
-                  <div class="text-center">
-                    <a class="small" href="register.php">Create an Account!</a>
+                    <a class="small" href="index.php">Sign-in as Reader?</a>
                   </div>
                 </div>
               </div>

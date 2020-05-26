@@ -1,6 +1,15 @@
 <?php
    // start session
-   session_start(); ?>
+   session_start(); 
+
+   // check login
+
+   if(!isset($_SESSION["aloggedin"]) || $_SESSION["aloggedin"] !== true){
+      header("location: adminlogin.php");
+      exit;
+  }
+   
+?>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -234,7 +243,7 @@
                      <!-- Nav Item - User Information -->
                      <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-blue-600 "><?php echo htmlspecialchars($_SESSION["username"]); ?></span>
+                        <span class="mr-2 d-none d-lg-inline text-blue-600 "><?php echo htmlspecialchars($_SESSION["admin"]); ?></span>
                         <img class="img-profile rounded-circle" src="https://kenh14cdn.com/thumb_w/620/2018/5/16/3189533012638884437482503274448191335956480n-15264802105001243615494.jpg">
                         </a>
                         <!-- Dropdown - User Information -->
@@ -528,7 +537,7 @@
                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                <div class="modal-footer">
                   <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                  <a class="btn btn-primary" href="index.php">Logout</a>
+                  <a class="btn btn-primary" href="logout.php">Logout</a>
                </div>
             </div>
          </div>
