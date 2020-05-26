@@ -1,6 +1,11 @@
 <?php
    // start session
-   session_start(); ?>
+   session_start(); 
+   if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+      header("location: index.php");
+      exit;
+  }
+   ?>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -214,32 +219,50 @@
                      <div class="topbar-divider d-none d-sm-block"></div>
                      <!-- Nav Item - User Information -->
                      <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-blue-600 ">Góc của Bư</span>
-                        <img class="img-profile rounded-circle" src="https://kenh14cdn.com/thumb_w/620/2018/5/16/3189533012638884437482503274448191335956480n-15264802105001243615494.jpg">
-                        </a>
-                        <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                           <a class="dropdown-item" href="profile.php">
-                           <i class="fas fa-user fa-sm fa-fw mr-2 "></i> Profile
-                           </a>
-                           <a class="dropdown-item" href="#">
-                           <i class="fas fa-cogs fa-sm fa-fw mr-2 "></i> Settings
-                           </a>
-                           <a class="dropdown-item" href="#">
-                           <i class="fas fa-list fa-sm fa-fw mr-2 "></i> Activity Log
-                           </a>
-                           <div class="dropdown-divider"></div>
-                           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                           <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 "></i> Logout
-                           </a>
-                        </div>
-                     </li>
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-blue-600 "><?php echo htmlspecialchars($_SESSION["username"]); ?></span>
+                <img class="img-profile rounded-circle" src="https://kenh14cdn.com/thumb_w/620/2018/5/16/3189533012638884437482503274448191335956480n-15264802105001243615494.jpg">
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="profile.php">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Settings
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Activity Log
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
                   </ul>
                </nav>
                <!-- End of Topbar -->
                <!-- Begin Page Content -->
                <div class="container-fluid">
+               <div class="row">
+                     
+                     <?php if($_SESSION['msg']!="")
+                         {?>
+                         <div class="col-md-6">
+                             <div class="alert alert-success" >
+                                 <strong>Success :</strong> 
+                                     <?php echo htmlentities($_SESSION['msg']);?>
+                                     <?php echo htmlentities($_SESSION['msg']="");?>
+                             </div>
+                         </div>
+                     <?php } ?>
+
+                  </div>
                   <!-- DataTales Example -->
                   <div class="card shadow mb-4 card-mp">
                      <div class="card-header py-3">
@@ -248,13 +271,15 @@
                      <div class="card-body">
                         <!--Information-->
                         <div class="row row-cols-2">
+                           
                            <div class="col-8">
-                              <form>
+                              <form action="update-profile.php" method="POST">
+                              <input type="hidden" name="id" value=<?php echo $_SESSION['id'];?>>
                                  <p style=" font-weight: 900;">Tài khoản</p>
                                  <!--Tên đăng nhập-->
                                  <?php
                                     require_once "config.php";
-                                    $sql1 = "SELECT userName FROM reader";
+                                    $sql1 = "SELECT userName FROM reader WHERE cardNumber =".$_SESSION["id"];
                                     $query = mysqli_query($link, $sql1);
                                     ?>
                                  <?php $row1 = mysqli_fetch_array($query);
@@ -263,13 +288,13 @@
                                  <div class="form-group row">
                                     <label for="user-profile" class="col-sm-3 col-form-label label-pb">Tên đăng nhập</label>
                                     <div class="col-sm-8">
-                                       <input type="text" class="form-control" value= <?php echo $username; ?> required  id="user-profile" placeholder="Tên đăng nhập">
+                                       <input type="text" class="form-control" value= "<?php echo $username; ?>" required  id="user-profile" placeholder="Tên đăng nhập">
                                     </div>
                                  </div>
                                  <p style=" font-weight: 900;">Thông tin chi tiết</p>
                                  <!--Tên người dùng-->
                                  <?php
-                                    $sql1 = "SELECT readerName FROM reader";
+                                    $sql1 = "SELECT readerName FROM reader WHERE cardNumber =".$_SESSION["id"];
                                     $query = mysqli_query($link, $sql1);
                                     ?>
                                  <?php $row1 = mysqli_fetch_array($query);
@@ -278,12 +303,12 @@
                                  <div class="form-group row">
                                     <label for="name-profile" class="col-sm-3 col-form-label label-pb">Tên người dùng</label>
                                     <div class="col-sm-8">
-                                       <input type="text" class="form-control"  value= "<?php echo $readername; ?>" required id="name-profile" placeholder="Tên người dùng">
+                                       <input type="text" class="form-control" name="readerName" value= "<?php echo $readername; ?>" required id="name-profile" placeholder="Tên người dùng">
                                     </div>
                                  </div>
                                  <!--Giới tính-->
                                  <?php
-                                    $sql1 = "SELECT gender FROM reader";
+                                    $sql1 = "SELECT gender FROM reader WHERE cardNumber =".$_SESSION["id"];
                                     $query = mysqli_query($link, $sql1);
                                     ?>
                                  <?php $row1 = mysqli_fetch_array($query);
@@ -292,7 +317,7 @@
                                  <div class="form-group row">
                                     <label for="gender-profile" class="col-sm-3 col-form-label label-pb">Giới tính</label>
                                     <div class="col-sm-8">
-                                       <select class="form-control" id="gender-profile" >
+                                       <select class="form-control" name="gender" id="gender-profile" >
                                           <option value= "<?php echo $gender; ?>" selected ><?php echo $gender; ?></option>
                                           <option>Nữ</option>
                                           <option>Nam</option>
@@ -301,22 +326,22 @@
                                  </div>
                                  <!--Ngày sinh-->
                                  <?php
-                                    $sql1 = "SELECT dateOfBirth FROM reader";
+                                    $sql1 = "SELECT dateOfBirth FROM reader WHERE cardNumber =".$_SESSION["id"];
                                     $query = mysqli_query($link, $sql1);
                                     ?>
                                  <?php $row1 = mysqli_fetch_array($query);
-                                    $dob = date_create($row1['dateOfBirth']);
-                                    $dateofbirth = date_format($dob, "d-m-Y");
+                                    
+                                    $dateofbirth = $row1['dateOfBirth']
                                     ?> 
                                  <div class="form-group row">
                                     <label for="birth-profile" class="col-sm-3 col-form-label label-pb">Ngày sinh</label>
                                     <div class="col-sm-8">
-                                       <input type="date" class="form-control"  value="<?php echo $dateofbirth; ?>" required id="birth-profile" >
+                                       <input type="date" class="form-control" name="dateOfBirth"  value="<?php echo $dateofbirth; ?>" required id="birth-profile" >
                                     </div>
                                  </div>
                                  <!--Số điện thoại-->
                                  <?php
-                                    $sql1 = "SELECT phoneNumber FROM reader";
+                                    $sql1 = "SELECT phoneNumber FROM reader WHERE cardNumber =".$_SESSION["id"];
                                     $query = mysqli_query($link, $sql1);
                                     ?>
                                  <?php $row1 = mysqli_fetch_array($query);
@@ -325,12 +350,12 @@
                                  <div class="form-group row">
                                     <label for="phone-profile" class="col-sm-3 col-form-label label-pb">Số điện thoại</label>
                                     <div class="col-sm-8">
-                                       <input type="text" class="form-control"  value="<?php echo $phonenumber; ?>" required id="phone-profile" placeholder="Số điện thoại">
+                                       <input type="text" class="form-control" name="phoneNumber"  value="<?php echo $phonenumber; ?>" required id="phone-profile" placeholder="Số điện thoại">
                                     </div>
                                  </div>
                                  <!--Địa chỉ-->
                                  <?php
-                                    $sql1 = "SELECT address FROM reader";
+                                    $sql1 = "SELECT address FROM reader WHERE cardNumber =".$_SESSION["id"];
                                     $query = mysqli_query($link, $sql1);
                                     ?>
                                  <?php $row1 = mysqli_fetch_array($query);
@@ -339,12 +364,12 @@
                                  <div class="form-group row">
                                     <label for="place-profile" class="col-sm-3 col-form-label label-pb">Địa chỉ</label>
                                     <div class="col-sm-8">
-                                       <input type="text" class="form-control"  value="<?php echo $address; ?>" required id="place-profile">
+                                       <input type="text" class="form-control" name="address"  value="<?php echo $address; ?>" required id="place-profile">
                                     </div>
                                  </div>
                                  <p style=" font-weight: 900;">Thẻ</p>
                                  <?php
-                                    $sql1 = "SELECT cardNumber,createdDay,expiredDay FROM card";
+                                    $sql1 = "SELECT cardNumber,createdDay,expiredDay FROM card WHERE cardNumber =".$_SESSION["id"];
                                     $query = mysqli_query($link, $sql1);
                                     ?>
                                  <?php $row1 = mysqli_fetch_array($query);
@@ -357,21 +382,24 @@
                                  <p style="font-weight:600">Mã số thẻ: <?php echo $cardNumber ?></p>
                                  <p style="font-weight:600">Ngày bắt đầu: <?php echo $createdDay ?> </p>
                                  <p style="font-weight:600">Ngày kết thúc: <?php echo $expiredDay ?> </p>
-                              </form>
-                              <div class=" btn-profile float-right">
+                                 <div class=" btn-profile float-right">
+
                                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
-                                 <a class="btn btn-primary" href="reader.html">Chấp nhận</a>
-                              </div>
-                           </div>
+                                 <button type="submit" class="btn btn-primary" href="profile.php">Chấp nhận</button>
+                                 </div>
+                           
+                              </form>
+                        </div>
                            <div class="col-4">
-                              <div class="card" style="width: 18rem; margin-left: 18%;">
+                              <div class="card" style="width: 18rem; margin-left: 13%;">
                                  <img src="https://kenh14cdn.com/thumb_w/620/2018/5/16/3189533012638884437482503274448191335956480n-15264802105001243615494.jpg" class="card-img-top card-img-top-profile" alt="...">
                                  <div class="card-body">
                                     <input type="text" style="margin-left: 0%;"class="form-control " placeholder="Điền link ảnh...">
                                  </div>
                               </div>
                            </div>
-                           ?>
+                           </div>
+                           
                         </div>
                      </div>
                   </div>
@@ -397,7 +425,7 @@
                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                <div class="modal-footer">
                   <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                  <a class="btn btn-primary" href="index.html">Logout</a>
+                  <a class="btn btn-primary" href="index.php">Logout</a>
                </div>
             </div>
          </div>
@@ -405,16 +433,15 @@
       </div>
       </div>
       <!-- Bootstrap core JavaScript-->
-      <script src="vendor/jquery/jquery.min.js"></script>
-      <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="./v/bootstrap/js/bootstrap.bundle.min.js"></script>
       <!-- Core plugin JavaScript-->
-      <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+      <script src="./v/jquery-easing/jquery.easing.min.js"></script>
       <!-- Custom scripts for all pages-->
-      <script src="js/sb-admin-2.min.js"></script>
+      <!-- <script src="./js/sb-admin-2.min.js"></script> -->
       <!-- Page level plugins -->
-      <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-      <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+      <script src="./v/datatables/jquery.dataTables.min.js"></script>
+      <script src="./v/datatables/dataTables.bootstrap4.min.js"></script>
       <!-- Page level custom scripts -->
-      <script src="js/demo/datatables-demo.js"></script>
+      <script src="./js/demo/datatables-demo.js"></script>
    </body>
 </html>
