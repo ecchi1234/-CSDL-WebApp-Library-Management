@@ -66,7 +66,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     if(empty($readerName_err) && empty($gender_err) && empty($dateOfBirth_err) 
     && empty($address_err) && empty($phoneNumber_err) ){
         // Prepare an update statement
-        $sql= "UPDATE reader SET userName=? readerName=?, gender=?, dateOfBirth=?, address=?, phoneNumber=? WHERE cardNumber=?";
+        $sql= "UPDATE reader SET readerName=?, gender=?, dateOfBirth=?, address=?, phoneNumber=? WHERE cardNumber=?";
         if($stmt = mysqli_prepare($link, $sql)){
             // // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "sssssi", $param_readerName, $param_gender, $param_dateOfBirth, $param_address, $param_phoneNumber, $param_cardNumber);
@@ -89,6 +89,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                 echo "Something went wrong. Please try again later.";
             }
         }
+        echo "test";
         
          
         // Close statement

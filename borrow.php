@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+require_once "config.php";
+
+
+// check login
+
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+   header("location: index.php");
+   exit;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -29,58 +43,28 @@
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-               <a class="nav-link" href="reader.html">
-               <i class="fas fa-book-reader"></i>
-               <span>Quản lý người đọc</span></a>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-               <a class="nav-link" href="book.html">
-               <i class="fas fa-fw fa-folder"></i>
-               <span>Quản lý tài liệu</span></a>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-               <a class="nav-link" href="giveback.html">
-               <i class="fas fa-backward"></i>
-               <span>Quản lý mượn trả</span></a>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-               <a class="nav-link" href="borrow.html">
+               <a class="nav-link" href="borrow.php">
                <i class="fas fa-book-open"></i>
-               <span>Quản lý mượn sách</span></a>
+               <span>Mượn sách</span></a>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-               <a class="nav-link" href="dashboard.html">
+               <a class="nav-link" href="bookcase.php">
                <i class="fas fa-chart-line"></i>
-               <span>Thống kê</span></a>
+               <span>Tủ sách</span></a>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-               <a class="nav-link" href="card.html">
-               <i class="fas fa-id-card"></i>
-               <span>Quản lý thẻ</span></a>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-               <a class="nav-link" href="help.html">
+               <a class="nav-link" href="reader-dashboard.php">
                <i class="fas fa-hands-helping"></i>
-               <span>Trợ giúp</span></a>
+               <span>Trang chủ</span></a>
             </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
          </ul>
          <!-- End of Sidebar -->
          <!-- Content Wrapper -->
@@ -233,7 +217,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-blue-600 ">Góc của Bư</span>
+                <span class="mr-2 d-none d-lg-inline text-blue-600 "><?php echo htmlspecialchars($_SESSION['username']);?></span>
                 <img class="img-profile rounded-circle" src="https://kenh14cdn.com/thumb_w/620/2018/5/16/3189533012638884437482503274448191335956480n-15264802105001243615494.jpg">
               </a>
               <!-- Dropdown - User Information -->
@@ -269,23 +253,48 @@
                         <h3 class="m-0 font-weight-bold text-primary">QUẢN LÝ MƯỢN SÁCH</h3>
                      </div>
                      <div class="card-body card-body-book">
-                        <div class="row row-book">
-                           <div class="col mt-3">
+                        <div class="row row-book" style="justify-content: center;">
+                     <?php
+
+                        $perpage = 21;
+
+                        if(isset($_GET["page"])){
+                        $page = intval($_GET["page"]);
+                        }
+                        else {
+                           $page = 1;
+                        }
+                     $calc = $perpage * $page;
+                     $start = $calc - $perpage;
+                     $sql = "SELECT b.bookCode, b.bookName, b.bookImage, a.authorName, c.categoryName, p.publisherName, b.publishYear, b.quantity FROM books b
+                     INNER JOIN authors a ON a.authorCode=b.authorCode
+                     INNER JOIN category c ON c.categoryCode=b.categoryCode
+                     INNER JOIN publisher p ON p.publisherCode=b.publisherCode LIMIT ".$start.", ".$perpage;
+                     $result = mysqli_query($link, $sql);
+
+                     $rows = mysqli_num_rows($result);
+
+                     if($rows){
+                     $i = 0;
+                     while($post = mysqli_fetch_assoc($result)) {
+                     
+                     ?>
+                           <div class="col-sm-auto mt-4">
                               <div class="card" style="width: 20rem;">
-                                 <img class="card-img-top" src="https://salt.tikicdn.com/cache/200x200/ts/product/b6/40/0e/fadbb2c98682dc74da8c1cf717f25ead.jpg" alt="Card image cap">
-                                 <h5 class="card-title name-book">Những cuộc phiêu lưu của Sherlock Holmes</h5>
+                                 <img class="card-img-top" src="<?php echo $post['bookImage'];?>" alt="Card image cap">
+                                 <h5 class="card-title name-book"><?php echo $post['bookName'];?></h5>
                                  <div class="row">
-                                    <p> <a class="btn btn-primary btn-primary-book" data-toggle="collapse" href="#book-detail-1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Chi tiết</a></p>
+                                    <p> <a class="btn btn-primary btn-primary-book" data-toggle="collapse" href="#book-detail-<?php echo $post['bookCode'];?>" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Chi tiết</a></p>
                                     <p> <a class="btn btn-danger btn-danger-book" data-toggle="collapse" href="#book-detail" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Mượn</a></p>
                                  </div>
                               </div>
                               <div class="row">
                                  <div class="col">
-                                    <div class="collapse multi-collapse" id="book-detail-1">
+                                    <div class="collapse multi-collapse" id="book-detail-<?php echo $post['bookCode'];?>">
                                        <div class="card card-body-book-detail">
-                                          <p class="card-text card-text-book">Tác giả: Arthur Conan Doyle</p>
-                                          <p class="card-text card-text-book">Thể loại: Trinh thám</p>
-                                          <p class="card-text card-text-book">Nhà xuất bản: Văn học</p>
+                                          <p class="card-text card-text-book">Tác giả: <?php echo $post['authorName'];?></p>
+                                          <p class="card-text card-text-book">Thể loại: <?php echo $post['categoryName'];?></p>
+                                          <p class="card-text card-text-book">Nhà xuất bản: <?php echo $post['publisherName'];?></p>
                                           <p class="card-text card-text-book">Thời hạn: 50 ngày</p>
                                           <p class="card-text card-text-book">Tình trạng: Còn sách</p>
                                        </div>
@@ -293,102 +302,76 @@
                                  </div>
                               </div>
                            </div>
-                           <div class="col mt-3">
-                              <div class="row">
-                                 <div class="card" style="width: 20rem;">
-                                    <img class="card-img-top" src="https://salt.tikicdn.com/cache/200x200/ts/product/b6/40/0e/fadbb2c98682dc74da8c1cf717f25ead.jpg" alt="Card image cap">
-                                    <h5 class="card-title name-book">Những cuộc phiêu lưu của Sherlock Holmes</h5>
-                                    <div class="row">
-                                       <p> <a class="btn btn-primary btn-primary-book" data-toggle="collapse" href="#book-detail-2" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Chi tiết</a></p>
-                                       <p> <a class="btn btn-danger btn-danger-book" data-toggle="collapse" href="#book-detail" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Mượn</a></p>
-                                    </div>
-                                 </div>
-                                 <div class="row">
-                                    <div class="col">
-                                       <div class="collapse multi-collapse" id="book-detail-2">
-                                          <div class="card card-body-book-detail">
-                                             <p class="card-text card-text-book">Tác giả: Arthur Conan Doyle</p>
-                                             <p class="card-text card-text-book">Thể loại: Trinh thám</p>
-                                             <p class="card-text card-text-book">Nhà xuất bản: Văn học</p>
-                                             <p class="card-text card-text-book">Thời hạn: 50 ngày</p>
-                                             <p class="card-text card-text-book">Tình trạng: Còn sách</p>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="col mt-3">
-                              <div class="card" style="width: 20rem;">
-                                 <img class="card-img-top" src="https://salt.tikicdn.com/cache/200x200/ts/product/b6/40/0e/fadbb2c98682dc74da8c1cf717f25ead.jpg" alt="Card image cap">
-                                 <h5 class="card-title name-book">Những cuộc phiêu lưu của Sherlock Holmes</h5>
-                                 <div class="row">
-                                    <p> <a class="btn btn-primary btn-primary-book" data-toggle="collapse" href="#book-detail-3" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Chi tiết</a></p>
-                                    <p> <a class="btn btn-danger btn-danger-book" data-toggle="collapse" href="#book-detail" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Mượn</a></p>
-                                 </div>
-                              </div>
-                              <div class="row">
-                                 <div class="col">
-                                    <div class="collapse multi-collapse" id="book-detail-3">
-                                       <div class="card card-body-book-detail">
-                                          <p class="card-text card-text-book">Tác giả: Arthur Conan Doyle</p>
-                                          <p class="card-text card-text-book">Thể loại: Trinh thám</p>
-                                          <p class="card-text card-text-book">Nhà xuất bản: Văn học</p>
-                                          <p class="card-text card-text-book">Thời hạn: 50 ngày</p>
-                                          <p class="card-text card-text-book">Tình trạng: Còn sách</p>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="col mt-3">
-                              <div class="card" style="width: 20rem;">
-                                 <img class="card-img-top" src="https://salt.tikicdn.com/cache/200x200/ts/product/b6/40/0e/fadbb2c98682dc74da8c1cf717f25ead.jpg" alt="Card image cap">
-                                 <h5 class="card-title name-book">Những cuộc phiêu lưu của Sherlock Holmes</h5>
-                                 <div class="row">
-                                    <p> <a class="btn btn-primary btn-primary-book" data-toggle="collapse" href="#book-detail-3" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Chi tiết</a></p>
-                                    <p> <a class="btn btn-danger btn-danger-book" data-toggle="collapse" href="#book-detail" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Mượn</a></p>
-                                 </div>
-                              </div>
-                              <div class="row">
-                                 <div class="col">
-                                    <div class="collapse multi-collapse" id="book-detail-3">
-                                       <div class="card card-body-book-detail">
-                                          <p class="card-text card-text-book">Tác giả: Arthur Conan Doyle</p>
-                                          <p class="card-text card-text-book">Thể loại: Trinh thám</p>
-                                          <p class="card-text card-text-book">Nhà xuất bản: Văn học</p>
-                                          <p class="card-text card-text-book">Thời hạn: 50 ngày</p>
-                                          <p class="card-text card-text-book">Tình trạng: Còn sách</p>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
+                     <?php }}?>
+                           <!---->
                         </div>
                         </div>
                         <nav aria-label="Page navigation example">
                            <ul class="pagination justify-content-center">
-                              <li class="page-item disabled">
-                                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                              </li>
-                              <li class="page-item"><a class="page-link" href="#">1</a></li>
-                              <li class="page-item"><a class="page-link" href="#">2</a></li>
-                              <li class="page-item"><a class="page-link" href="#">3</a></li>
-                              <li class="page-item"><a class="page-link" href="#">4</a></li>
-                              <li class="page-item"><a class="page-link" href="#">5</a></li>
-                              <li class="page-item"><a class="page-link" href="#">6</a></li>
-                              <li class="page-item"><a class="page-link" href="#">7</a></li>
-                              <li class="page-item"><a class="page-link" href="#">8</a></li>
-                              <li class="page-item"><a class="page-link" href="#">9</a></li>
-                              <li class="page-item"><a class="page-link" href="#">10</a></li>
-                              <li class="page-item"><a class="page-link" href="#">11</a></li>
-                              <li class="page-item"><a class="page-link" href="#">12</a></li>
-                              <li class="page-item"><a class="page-link" href="#">13</a></li>
-                              <li class="page-item">
-                                 <a class="page-link" href="#">Next</a>
-                              </li>
-                           </ul>
-                        </nav>
+                        <?php
+
+                        if(isset($page))
+                        {
+                        $result = mysqli_query($link,"select Count(*) As Total from books");
+                        $rows = mysqli_num_rows($result);
+                        if($rows)
+                        {
+                           $rs = mysqli_fetch_assoc($result);
+
+                           $total = $rs["Total"];
+
+                        }
+
+                           $totalPages = ceil($total / $perpage);
+
+                           if($page <=1 ){
+
+                           echo '<li class="page-item disabled">
+                              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                 </li>';
+
+                        }
+
+                        else
+                        {
+                           $j = $page - 1;
+                           echo "<li class='page-item'>
+                                    <a class='page-link' href='borrow.php?page=$j' tabindex='-1' aria-disabled='true'>Previous</a>
+                                 </li>";
+                        }
+
+                        for($i=1; $i <= $totalPages; $i++)
+
+                        {
+                        if($i<>$page)
+                        {
+                           echo "<li class='page-item'><a class='page-link' href='borrow.php?page=$i'>$i</a></li>";
+                        }
+                        else
+                        {
+                           echo '<li class="page-item active"><a class="page-link">'.$i.'</a></li>';
+                        }
+
+                        }
+
+                        if($page == $totalPages )
+                        {
+                           echo '<li class="page-item disabled">
+                                    <a class="page-link">Next</a>
+                                 </li>';
+                        }
+                        else
+
+                        {
+                           $j = $page + 1;
+                           echo '<li class="page-item">
+                                    <a class="page-link" href="borrow.php?page="'.$j.'>Next</a>
+                                 </li>';
+                        }
+                        }
+                     ?>
+                       </ul>
+                     </nav>
                      </div>
                   </div>
                </div>

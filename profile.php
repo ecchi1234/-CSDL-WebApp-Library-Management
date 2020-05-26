@@ -40,58 +40,27 @@
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-               <a class="nav-link" href="reader.php">
+               <a class="nav-link" href="reader-dashboard.php">
                <i class="fas fa-book-reader"></i>
-               <span>Quản lý người đọc</span></a>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-               <a class="nav-link" href="book.php">
-               <i class="fas fa-fw fa-folder"></i>
-               <span>Quản lý tài liệu</span></a>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-               <a class="nav-link" href="giveback.php">
-               <i class="fas fa-backward"></i>
-               <span>Quản lý mượn trả</span></a>
+               <span>Trang chủ</span></a>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                <a class="nav-link" href="borrow.php">
-               <i class="fas fa-book-open"></i>
-               <span>Quản lý mượn sách</span></a>
+               <i class="fas fa-fw fa-folder"></i>
+               <span>Mượn sách</span></a>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-               <a class="nav-link" href="dashboard.php">
-               <i class="fas fa-chart-line"></i>
-               <span>Thống kê</span></a>
+               <a class="nav-link" href="bookcase.php">
+               <i class="fas fa-backward"></i>
+               <span>Tủ sách</span></a>
             </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-               <a class="nav-link" href="card.php">
-               <i class="fas fa-id-card"></i>
-               <span>Quản lý thẻ</span></a>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-               <a class="nav-link" href="help.php">
-               <i class="fas fa-hands-helping"></i>
-               <span>Trợ giúp</span></a>
-            </li>
+            
          </ul>
          <!-- End of Sidebar -->
          <!-- Content Wrapper -->
