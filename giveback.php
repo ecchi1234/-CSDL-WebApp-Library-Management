@@ -21,11 +21,13 @@
       <meta name="author" content="">
       <title>DEADLIB</title>
       <!-- Custom fonts for this template-->
-      <link href="v/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+      <link href="./v/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
       <link href="https://fonts.google.com/specimen/Montserrat" rel="stylesheet">
       <!-- Custom styles for this template-->
-      <link href="css/lib.css" rel="stylesheet">
-      <link rel="stylesheet" href="v/datatables/dataTables.bootstrap4.min.css">
+      <link href="./css/lib.css" rel="stylesheet">
+      <!--This need to be on top of this html-->
+      <script src="./v/jquery/jquery.min.js"></script>
+      <script src="./js/sb-admin-2.min.js"></script>
    </head>
    <body id="page-top">
       <!-- Page Wrapper -->
@@ -43,7 +45,7 @@
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-               <a class="nav-link" href="reader.html">
+               <a class="nav-link" href="reader.php">
                <i class="fas fa-book-reader"></i>
                <span>Quản lý người đọc</span></a>
             </li>
@@ -51,7 +53,7 @@
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-               <a class="nav-link" href="book.html">
+               <a class="nav-link" href="book.php">
                <i class="fas fa-fw fa-folder"></i>
                <span>Quản lý tài liệu</span></a>
             </li>
@@ -59,7 +61,7 @@
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-               <a class="nav-link" href="giveback.html">
+               <a class="nav-link" href="giveback.php">
                <i class="fas fa-backward"></i>
                <span>Quản lý mượn trả</span></a>
             </li>
@@ -67,7 +69,7 @@
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-               <a class="nav-link" href="borrow.html">
+               <a class="nav-link" href="borrow.php">
                <i class="fas fa-book-open"></i>
                <span>Quản lý mượn sách</span></a>
             </li>
@@ -75,7 +77,7 @@
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-               <a class="nav-link" href="dashboard.html">
+               <a class="nav-link" href="dashboard.php">
                <i class="fas fa-chart-line"></i>
                <span>Thống kê</span></a>
             </li>
@@ -83,7 +85,7 @@
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-               <a class="nav-link" href="card.html">
+               <a class="nav-link" href="card.php">
                <i class="fas fa-id-card"></i>
                <span>Quản lý thẻ</span></a>
             </li>
@@ -91,7 +93,7 @@
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-               <a class="nav-link" href="help.html">
+               <a class="nav-link" href="help.php">
                <i class="fas fa-hands-helping"></i>
                <span>Trợ giúp</span></a>
             </li>
@@ -252,7 +254,7 @@
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="profile.php">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
                 </a>
@@ -284,41 +286,62 @@
                      </div>
                      <div class="card-body">
                         <div class="table-responsive">
-                           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                              <thead>
-                                 <tr>
-                                    <th>Mã số thẻ</th>
-                                    <th>Tên độc giả</th>
-                                    <th>Nhân viên trực quản</th>
-                                    <th>Số lượng mượn</th>
-                                    <th>Ngày mượn</th>
-                                    <th>Ngày trả</th>
-                                 </tr>
-                              </thead>
-                              <tfoot>
-                                 <tr>
-                                    <th>Mã số thẻ</th>
-                                    <th>Tên độc giả</th>
-                                    <th>Nhân viên trực quản</th>
-                                    <th>Số lượng mượn</th>
-                                    <th>Ngày mượn</th>
-                                    <th>Ngày trả</th>
-                                 </tr>
-                              </tfoot>
-                              <tbody>
-                                 <tr>
-                                    <td>18021198</td>
-                                    <td>Nguyễn Phương Thảo</td>
-                                    <td>Nguyễn Ngọc Chi</td>
-                                    <td>1</td>
-                                    <td>26/04/2020</td>
-                                    <td>27/04/2020</td>
-                                 </tr>
-                              </tbody>
-                           </table>
-                        </div>
-                     </div>
-                  </div>
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+               <?php
+                    // Include config file
+                    require_once "config.php";
+                    
+                    // Attempt select query execution
+                    $sql = "SELECT a.cardNumber, r.readerName, l.librarianName, a.quantity, a.dateBorrow, a.dateBack 
+                    FROM actions a INNER JOIN librarian l ON a.librarianCode = l.librarianCode 
+                    INNER JOIN reader r ON a.cardNumber=r.cardNumber";
+                    if($result = mysqli_query($link, $sql)){
+                        if(mysqli_num_rows($result) > 0){
+                                echo "<thead>";
+                                    echo "<tr>";
+                                        echo "<th>Mã thẻ</th>";
+                                        echo "<th>Tên độc giả</th>";
+                                        echo "<th>Nhân viên trực quản</th>";
+                                        echo "<th>Số lượng mượn</th>";
+                                        echo "<th>Ngày mượn</th>";
+                                        echo "<th>Ngày trả</th>";
+                                    echo "</tr>";
+                                echo "</thead>";
+                                echo "<tbody>";
+                                while($row = mysqli_fetch_array($result)){
+                                    $brDate = date_create($row['dateBorrow']);
+                                    $dateBorrow = date_format($brDate, "d-m-Y");
+                                    
+                                    $bkDate = date_create($row['dateBack']);
+                                    $dateBack = date_format($bkDate, "d-m-Y");
+
+                                    echo "<tr>";
+                                        echo "<td>" . $row['cardNumber'] . "</td>";
+                                        echo "<td>" . $row['readerName'] . "</td>";
+                                        echo "<td>" . $row['librarianName'] . "</td>";
+                                        echo "<td>" . $row['quantity'] . "</td>";
+                                        echo "<td>" . $dateBorrow . "</td>";
+                                        echo "<td>" . $dateBack . "</td>";
+                                    echo "</tr>";
+                                }
+                                echo "</tbody>";                            
+                            echo "</table>";
+                            // Free result set
+                            mysqli_free_result($result);
+                        } else{
+                            echo "<p class='lead'><em>No records were found.</em></p>";
+                        }
+                    } else{
+                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                    }
+ 
+                  //   // Close connection
+                  //   mysqli_close($link);
+                    ?>
+               </table>
+               </div>
+               </div>
+               </div>
                </div>
                <!-- /.container-fluid -->
             </div>
@@ -353,11 +376,11 @@
       <!-- Core plugin JavaScript-->
       <script src="v/jquery-easing/jquery.easing.min.js"></script>
       <!-- Custom scripts for all pages-->
-      <script src="js/sb-admin-2.min.js"></script>
+      <!-- <script src="./js/sb-admin-2.min.js"></script> -->
       <!-- Page level plugins -->
       <script src="v/datatables/jquery.dataTables.min.js"></script>
       <script src="v/datatables/dataTables.bootstrap4.min.js"></script>
       <!-- Page level custom scripts -->
-      <script src="js/demo/datatables-demo.js"></script>
+      <script src="./js/demo/datatables-demo.js"></script>
    </body>
 </html>
