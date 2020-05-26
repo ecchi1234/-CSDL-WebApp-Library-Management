@@ -36,20 +36,12 @@
                </div>
                <div class="sidebar-brand-text">DEADLIB</div>
             </a>
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-               <a class="nav-link" href="reader-dashboard.php">
-               <i class="fas fa-book-reader"></i>
-               <span>Trang chủ</span></a>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+             <!-- Divider -->
+             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                <a class="nav-link" href="borrow.php">
-               <i class="fas fa-fw fa-folder"></i>
+               <i class="fas fa-book-open"></i>
                <span>Mượn sách</span></a>
             </li>
             <!-- Divider -->
@@ -57,10 +49,19 @@
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                <a class="nav-link" href="bookcase.php">
-               <i class="fas fa-backward"></i>
+               <i class="fas fa-chart-line"></i>
                <span>Tủ sách</span></a>
             </li>
-            
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+               <a class="nav-link" href="reader-dashboard.php">
+               <i class="fas fa-hands-helping"></i>
+               <span>Trang chủ</span></a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
          </ul>
          <!-- End of Sidebar -->
          <!-- Content Wrapper -->

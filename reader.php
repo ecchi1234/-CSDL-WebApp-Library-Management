@@ -141,14 +141,6 @@ session_start();
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-               <a class="nav-link" href="borrow.php">
-               <i class="fas fa-book-open"></i>
-               <span>Quản lý mượn sách</span></a>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
                <a class="nav-link" href="dashboard.php">
                <i class="fas fa-chart-line"></i>
                <span>Thống kê</span></a>
@@ -459,7 +451,7 @@ session_start();
                   <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                   <div class="modal-footer">
                      <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                     <a class="btn btn-primary" href="index.php">Logout</a>
+                     <a class="btn btn-primary" href="logout.php">Logout</a>
                   </div>
                </div>
             </div>

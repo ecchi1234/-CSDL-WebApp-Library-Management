@@ -53,14 +53,6 @@
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-               <a class="nav-link" href="borrow.html">
-               <i class="fas fa-book-open"></i>
-               <span>Quản lý mượn sách</span></a>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
                <a class="nav-link" href="dashboard.html">
                <i class="fas fa-chart-line"></i>
                <span>Thống kê</span></a>
