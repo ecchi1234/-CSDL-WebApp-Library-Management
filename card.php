@@ -2,13 +2,14 @@
 // start session
 session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-  header("location: index.php");
-  exit;
+   header("location: index.php");
+   exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
    <head>
-   <meta charset="utf-8">
+      <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <meta name="description" content="">
@@ -22,6 +23,81 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       <!--This need to be on top of this html-->
       <script src="./v/jquery/jquery.min.js"></script>
       <script src="./js/sb-admin-2.min.js"></script>
+      <script type="text/javascript">
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+            var seemodalhtml = "";
+            $('.see').click(function(){
+               seemodalhtml = $("#informModal").html();
+               var cardNumber = $(this).data('id');
+               // AJAX request
+               $.ajax({
+                  url: 'see-reader.php',
+                  type: 'post',
+                  data: {cardNumber: cardNumber},
+                  success: function(response){
+                     // Add response in Modal Body
+                     $('#informModal .modal-body').html(response);
+
+                     // // Display Modal
+                     //  $('#see-informbook-Modal').modal('show'); 
+                  }
+               })
+            });
+
+            $("#informModal").on("hidden.bs.modal", function () {
+               //here you can get old html of you modal popup
+               $("#informModal").html(seemodalhtml);// In this, we are adding old html in modal pop for achieving reset trick
+            });
+
+            //-------------------------------------------------------------------
+
+            $('.edit').click(function(){
+               var cardNumber = $(this).data('id');
+               // AJAX request
+               $.ajax({
+                  url: 'formdisplay-reader.php',
+                  type: 'post',
+                  data: {cardNumber: cardNumber},
+                  success: function(response){
+                     // Add response in Modal Body
+                     $('#edit-inform-user-Modal .modal-body').html(response);
+
+                     // // Display Modal
+                     //  $('#edit-informbook-Modal').modal('show'); 
+                  }
+               })
+            });
+            //------------------------------------
+            //Code for open bootstrap modal pop up
+            var addmodalHtml = ""; // this is varibale, in which we will save modal html before open
+            $('#add-user-button').click(function(){
+               addmodalHtml = $('#addModal').html();
+               $('#addModal').modal("show");
+            });
+            //Code for close bootstrap modal popup
+            $("#addModal").on("hidden.bs.modal", function () {
+               //here you can get old html of you modal popup
+               $("#addModal").html(addmodalHtml);// In this, we are adding old html in modal pop for achieving reset trick
+            });
+
+            //-----------------------------------
+            // xóa một bản ghi
+
+            $('.delete').click(function(){
+               var bookCode = $(this).data('id');
+               $tr = $(this).closest('tr');
+               var data = $tr.children('td').map(function(){
+                  return $(this).text();
+               }).get();
+
+               console.log(data);
+
+               $('#deleteModal .modal-body span b').text(' ' + data[1]);
+               $('#delete-id').val(data[0]);
+            });
+        });
+    </script>
    </head>
    <body id="page-top">
       <!-- Page Wrapper -->
@@ -110,7 +186,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         </div>
                      </div>
                   </form>
-                   <!-- Topbar Navbar -->
+                 <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -243,7 +319,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-blue-600 ">Góc của Bư</span>
+                <span class="mr-2 d-none d-lg-inline text-blue-600 "><?php echo htmlspecialchars($_SESSION["username"]); ?></span>
                 <img class="img-profile rounded-circle" src="https://kenh14cdn.com/thumb_w/620/2018/5/16/3189533012638884437482503274448191335956480n-15264802105001243615494.jpg">
               </a>
               <!-- Dropdown - User Information -->
@@ -273,29 +349,32 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                <!-- End of Topbar -->
                <!-- Begin Page Content -->
                <div class="container-fluid">
-               <div class="row">
+                    <div class="row">
                      
-                     <?php if($_SESSION['msg']!="")
-                         {?>
-                         <div class="col-md-6">
-                             <div class="alert alert-success" >
-                                 <strong>Success :</strong> 
-                                     <?php echo htmlentities($_SESSION['msg']);?>
-                                     <?php echo htmlentities($_SESSION['msg']="");?>
-                             </div>
-                         </div>
-                     <?php } ?>
-
-                  </div>
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-            <div class="card-header py-3">
-            <h3 class="m-0 font-weight-bold text-primary">QUẢN LÝ THẺ</h3>
-            </div>
-            <div class="card-body">
-            <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-            <?php
+                        <?php if($_SESSION['msg']!="")
+                            {?>
+                            <div class="col-md-6">
+                                <div class="alert alert-success" >
+                                    <strong>Success :</strong> 
+                                        <?php echo htmlentities($_SESSION['msg']);?>
+                                        <?php echo htmlentities($_SESSION['msg']="");?>
+                                </div>
+                            </div>
+                        <?php } ?>
+   
+                     </div>
+               <!-- DataTales Example -->
+               <div class="card shadow mb-4">
+               <div class="card-header py-3">
+               <h3 class="m-0 font-weight-bold text-primary">QUẢN LÝ NGƯỜI ĐỌC</h3>
+               </div>
+               <div class="card-body">
+               <form>
+               <a id = "add-user-button" class="btn btn-primary-add " href="#" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus" style="display: inline;"></i>Thêm</a>
+               </form>
+               <div class="table-responsive">
+               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+               <?php
                  // Include config file
                  require_once "config.php";
                  
@@ -339,40 +418,42 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                //   // Close connection
                //   mysqli_close($link);
                  ?>
-            </table>
-            </div>
-            </div>
-            </div>
-            </div>
+               </table>
+               </div>
+               </div>
+               </div>
+               </div>
                <!-- /.container-fluid -->
-            </div>
-            <!-- End of Footer -->
-         </div>
-         <!-- End of Content Wrapper -->
-      </div>
-      <!-- End of Page Wrapper -->
-      <!-- Logout Modal-->
-      <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-               <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-                  </button>
                </div>
-               <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-               <div class="modal-footer">
-                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                  <a class="btn btn-primary" href="login.html">Logout</a>
+               <!-- End of Footer -->
+            </div>
+            <!-- End of Content Wrapper -->
+         </div>
+         <!-- End of Page Wrapper -->
+         <!-- Logout Modal-->
+         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">×</span>
+                     </button>
+                  </div>
+                  <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                  <div class="modal-footer">
+                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                     <a class="btn btn-primary" href="index.php">Logout</a>
+                  </div>
                </div>
             </div>
          </div>
-      </div>
-     
+       </div>
+
       </div>
       </div>
       <!-- Bootstrap core JavaScript-->
+      <!-- <script src="./vendor/jquery/jquery.min.js"></script> -->
       <script src="./v/bootstrap/js/bootstrap.bundle.min.js"></script>
       <!-- Core plugin JavaScript-->
       <script src="./v/jquery-easing/jquery.easing.min.js"></script>
