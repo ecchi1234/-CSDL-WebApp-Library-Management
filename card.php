@@ -359,7 +359,7 @@ if(!isset($_SESSION["aloggedin"]) || $_SESSION["aloggedin"] !== true){
                <!-- DataTales Example -->
                <div class="card shadow mb-4">
                <div class="card-header py-3">
-               <h3 class="m-0 font-weight-bold text-primary">QUẢN LÝ NGƯỜI ĐỌC</h3>
+               <h3 class="m-0 font-weight-bold text-primary">QUẢN LÝ THẺ</h3>
                </div>
                <div class="card-body">
                <form>
