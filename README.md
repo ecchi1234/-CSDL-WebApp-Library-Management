@@ -1,5 +1,6 @@
 # Web App Quản lý thư viện - DEADLIB
 Ứng dụng quản lý thư viện số để giúp nhân viên thư viện thao tác với cơ sở dữ liệu một cách thuận tiện, đồng thời giúp bạn đọc thao tác mượn, trả sách.
+Link web: https://deadlib.herokuapp.com/
 
 ## Yêu cầu chức năng
 **Đối tượng sử dụng:** 
