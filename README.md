@@ -3,6 +3,18 @@
 
 Link web: https://deadlib.herokuapp.com/
 
+Tài khoản demo:
+
+**Admin:**
+
+username: Tdkqby6
+pass: 10000000
+
+**Bạn đọc:**
+
+username: ecchi123
+pass: 123456
+
 ## Yêu cầu chức năng
 **Đối tượng sử dụng:** 
 + Cán bộ nhân viên thư viện
