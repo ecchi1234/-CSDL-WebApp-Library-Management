@@ -465,7 +465,7 @@
                            <!------------------------------------------------------------------------------------------------------------------------------------------->
                            <!--Sách chưa trả-->
                            <?php
-                              $sql1 = "SELECT COUNT(actionCode) AS noGiveBack FROM actions WHERE dateBack IS NULL";
+                              $sql1 = "SELECT sum(quantity) AS noGiveBack FROM actions WHERE dateBack IS NULL";
                               $query = mysqli_query($link, $sql1);
                               ?>
                            <?php $row1 = mysqli_fetch_array($query);
@@ -486,7 +486,7 @@
                            <!------------------------------------------------------------------------------------------------------------------------------------------->
                            <!--Sách trả quá hạn-->
                            <?php
-                              $sql1 = "SELECT COUNT(actionCode) as overTime FROM actions WHERE datediff(dateBack,dateBorrow)>timetoExpired";
+                              $sql1 = "SELECT COUNT(a.actionCode) as overTime FROM actions a INNER JOIN books b ON b.bookCode = a.bookCode WHERE datediff(a.dateBack,a.dateBorrow)>b.duration";
                               $query = mysqli_query($link, $sql1);
                               ?>
                            <?php $row1 = mysqli_fetch_array($query);

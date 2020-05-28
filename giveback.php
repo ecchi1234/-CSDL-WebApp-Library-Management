@@ -285,7 +285,7 @@
                     require_once "config.php";
                     
                     // Attempt select query execution
-                    $sql = "SELECT a.cardNumber, r.readerName, l.librarianName, a.quantity, a.dateBorrow, a.dateBack 
+                    $sql = "SELECT a.cardNumber, r.readerName, l.librarianName, a.quantity, a.dateBorrow, if (a.dateBack IS NULL, 'N/A', a.dateBack) as dateBack 
                     FROM actions a INNER JOIN librarian l ON a.librarianCode = l.librarianCode 
                     INNER JOIN reader r ON a.cardNumber=r.cardNumber";
                     if($result = mysqli_query($link, $sql)){
@@ -302,12 +302,17 @@
                                 echo "</thead>";
                                 echo "<tbody>";
                                 while($row = mysqli_fetch_array($result)){
+                                    
                                     $brDate = date_create($row['dateBorrow']);
                                     $dateBorrow = date_format($brDate, "d-m-Y");
                                     
-                                    $bkDate = date_create($row['dateBack']);
-                                    $dateBack = date_format($bkDate, "d-m-Y");
-
+                                    if ($row['dateBack'] !== 'N/A'){
+                                      $bkDate = date_create($row['dateBack']);
+                                      $dateBack = date_format($bkDate, "d-m-Y");  
+                                    }
+                                    else{
+                                      $dateBack = $row['dateBack'];
+                                    }
                                     echo "<tr>";
                                         echo "<td>" . $row['cardNumber'] . "</td>";
                                         echo "<td>" . $row['readerName'] . "</td>";
