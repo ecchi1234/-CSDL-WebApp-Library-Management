@@ -7,9 +7,9 @@ Tài khoản demo:
 
 **Admin:**
 
-username: Tdkqby6
+username: admin
 
-pass: 10000000
+pass: test@123
 
 **Bạn đọc:**
 
