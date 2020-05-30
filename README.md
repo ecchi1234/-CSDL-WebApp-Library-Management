@@ -3,6 +3,20 @@
 
 Link web: https://deadlib.herokuapp.com/
 
+Tài khoản demo:
+
+**Admin:**
+
+username: admin
+
+pass: test@123
+
+**Bạn đọc:**
+
+username: ecchi123
+
+pass: 123456
+
 ## Yêu cầu chức năng
 **Đối tượng sử dụng:** 
 + Cán bộ nhân viên thư viện
@@ -25,4 +39,4 @@ _Về phía bạn đọc:_
 
 ## Cơ sở dữ liệu:
 
-![Library Model Database](https://github.com/ecchi1234/-CSDL-WebApp-Library-Management/blob/master/libmodel.png)
+![Library Model Database](https://github.com/ecchi1234/-CSDL-WebApp-Library-Management/blob/master/lib-eer-diagram-updated.png)
