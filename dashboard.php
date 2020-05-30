@@ -317,7 +317,7 @@
                            <!------------------------------------------------------------------------------------------------------------------------------------>
                            <!-- Sách mới nhập -->
                            <?php
-                              $sql1 = "SELECT COUNT(publishYear) AS newBook FROM books WHERE publishYear = (SELECT MAX(publishYear) FROM books)";
+                              $sql1 = "SELECT COUNT(created_at) AS newBook FROM books WHERE TIMESTAMPDIFF(DAY,`created_at`,NOW()) <= 15";
                               $query = mysqli_query($link, $sql1);
                               ?>
                            <?php $row1 = mysqli_fetch_array($query);

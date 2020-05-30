@@ -92,7 +92,7 @@ if(!isset($_SESSION["aloggedin"]) || $_SESSION["aloggedin"] !== true){
             // xóa một bản ghi
 
             $('.delete').click(function(){
-               var bookCode = $(this).data('id');
+               var cardNumber = $(this).data('id');
                $tr = $(this).closest('tr');
                var data = $tr.children('td').map(function(){
                   return $(this).text();
@@ -378,7 +378,7 @@ if(!isset($_SESSION["aloggedin"]) || $_SESSION["aloggedin"] !== true){
                     require_once "config.php";
                     
                     // Attempt select query execution
-                    $sql = "SELECT r.cardNumber, r.readerName, r.gender, r.dateOfBirth, r.address, r.phoneNumber, c.createdDay FROM reader r
+                    $sql = "SELECT r.cardNumber, r.readerName, r.gender, r.dateOfBirth, r.address, r.phoneNumber, c.createdDay, r.status FROM reader r
                     INNER JOIN card c ON r.cardNumber=c.cardNumber";
                     if($result = mysqli_query($link, $sql)){
                         if(mysqli_num_rows($result) > 0){
@@ -401,8 +401,13 @@ if(!isset($_SESSION["aloggedin"]) || $_SESSION["aloggedin"] !== true){
                                     
                                     $joinedDate = date_create($row['createdDay']);
                                     $createdDate = date_format($joinedDate, "d-m-Y");
-
-                                    echo "<tr>";
+                                    if ($row['status'] == 0){
+                                       echo "<tr style='background-color: #eafcdc;' title='Người đọc bị khóa'>";
+                                    }
+                                    else{
+                                       echo "<tr>";
+                                    }
+                                    
                                         echo "<td>" . $row['cardNumber'] . "</td>";
                                         echo "<td>" . $row['readerName'] . "</td>";
                                         echo "<td>" . $row['gender'] . "</td>";
@@ -413,7 +418,14 @@ if(!isset($_SESSION["aloggedin"]) || $_SESSION["aloggedin"] !== true){
                                         echo "<td>";
                                             echo "<a class='see' href='#' data-toggle='modal' role='button' data-target='#informModal' data-id=".$row['cardNumber']."><span class='fas fa-fw fa-eye' title='View Record' data-toggle='tooltip'></span></a>";
                                             echo "<a class='edit' href='#' data-toggle='modal' role='button' data-target='#edit-inform-user-Modal' data-id=".$row['cardNumber']."><span class='fas fa-fw fa-pencil-alt' title='Edit Record' data-toggle='tooltip'></span></a>";
-                                            echo "<a class='delete' href='#' data-toggle='modal' role='button' data-target='#deleteModal' data-id=".$row['cardNumber']."><span class='fas fa-fw fa-trash' title='Delete Record' data-toggle='tooltip'></span></a>";
+                                            if ($row['status'] == 1){
+                                               echo "<a class='delete' href='#' data-toggle='modal' role='button' data-target='#deleteModal' data-id=".$row['cardNumber']."><span class='fa fa-user-times' title='Khóa người đọc' data-toggle='tooltip'></span></a>";
+
+                                            }
+                                            else{
+                                             echo "<a class='delete' href='#' data-toggle='modal' role='button' data-target='#deleteModal' data-id=".$row['cardNumber']."><span class='fa fa-user-plus' title='Mở khóa' data-toggle='tooltip'></span></a>";
+                                            }
+                                            
                                         echo "</td>";
                                     echo "</tr>";
                                 }
@@ -640,7 +652,7 @@ if(!isset($_SESSION["aloggedin"]) || $_SESSION["aloggedin"] !== true){
 
                <!-- Modal footer -->
                <div class="modal-footer">
-                  <form action="delete.php" method="post">
+                  <form action="delete-reader.php" method="post">
                      <input type="hidden" name="delete-id" id="delete-id"></input>
                      <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
                      <button class="btn btn-primary" type="submit">Chấp nhận</button>

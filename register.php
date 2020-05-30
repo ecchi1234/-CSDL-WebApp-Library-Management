@@ -14,7 +14,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $username_err = "Please enter a username.";
     } else{
         // Prepare a select statement
-        $sql = "SELECT cardNumber FROM reader WHERE userName = ?";
+        $sql = "SELECT id FROM users WHERE username = ?";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -111,25 +111,39 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             
             $last_id = mysqli_insert_id($link);
             // Prepare an insert statement
-            $sql = "INSERT INTO reader (cardNumber, userName, passWord, readerName, address, phoneNumber) VALUES (".$last_id.",?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO reader (cardNumber, readerName, address, phoneNumber) VALUES (".$last_id.",?, ?, ?)";
             echo $last_id;
             echo $sql;
             if($stmt = mysqli_prepare($link, $sql)){
                
                 // Bind variables to the prepared statement as parameters
-                mysqli_stmt_bind_param($stmt, "sssss", $param_username, $param_password, $param_readerName, $param_address, $param_phoneNumber);
+                mysqli_stmt_bind_param($stmt, "sss", $param_readerName, $param_address, $param_phoneNumber);
                 
                 // Set parameters
-                $param_username = $username;
-                $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+               
                 $param_readerName = $readerName;
                 $param_address = $address;
                 $param_phoneNumber = $phoneNumber;
                 
                 // Attempt to execute the prepared statement
                 if(mysqli_stmt_execute($stmt)){
-                    // Redirect to login page
-                    header("location: index.php");
+                  $sql2 = "INSERT INTO users (id, username, password) values (".$last_id.", ?, ?)";
+                  if ($stmt2 = mysqli_prepare($link, $sql2)){
+                    mysqli_stmt_bind_param($stmt2, "ss", $param_username, $param_password);
+
+                    $param_username = $username;
+                    $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+
+                    if (mysqli_stmt_execute($stmt2)){
+                      // Redirect to login page
+                      header("location: index.php");
+                    }
+                    else{
+                      echo "something went wrong. Please try again later.";
+                    }
+
+                  }
+                    
                 } else{
                     echo "Something went wrong. Please try again later.";
                 }
