@@ -3,7 +3,7 @@
 
 Link web: https://deadlib.herokuapp.com/
 
-Báo cáo: https://bit.ly/bao-cao-btl
+Báo cáo: https://bit.ly/bao-cao-btl hoặc https://bit.ly/bao-cao-btl-du-phong
 
 Tài khoản demo:
 
