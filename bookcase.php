@@ -35,7 +35,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="reader.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="reader-dashboard.php">
         <div class="sidebar-brand-icon ">
           <i class="fas fa-book"></i>
         </div>
