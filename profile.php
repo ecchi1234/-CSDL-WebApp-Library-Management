@@ -249,12 +249,12 @@
                                  <!--Tên đăng nhập-->
                                  <?php
                                     require_once "config.php";
-                                    $sql1 = "SELECT userName FROM reader WHERE cardNumber =".$_SESSION["id"];
+                                    $sql1 = "SELECT username FROM users WHERE id =".$_SESSION["id"];
                                     $query = mysqli_query($link, $sql1);
                                     
                                     ?>
                                  <?php $row1 = mysqli_fetch_array($query);
-                                    $username = $row1['userName']; 
+                                    $username = $row1['username']; 
                                     ?> 
                                  <div class="form-group row">
                                     <label for="user-profile" class="col-sm-3 col-form-label label-pb">Tên đăng nhập</label>
