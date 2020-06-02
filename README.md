@@ -39,4 +39,4 @@ _Về phía bạn đọc:_
 
 ## Cơ sở dữ liệu:
 
-![Library Model Database](https://github.com/ecchi1234/-CSDL-WebApp-Library-Management/blob/master/lib-eer-diagram-updated.png)
+![Library Model Database](https://github.com/ecchi1234/-CSDL-WebApp-Library-Management/blob/master/lib-eer-diagram%20(2).png)
