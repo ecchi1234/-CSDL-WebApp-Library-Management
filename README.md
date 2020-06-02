@@ -3,6 +3,8 @@
 
 Link web: https://deadlib.herokuapp.com/
 
+Báo cáo: https://github.com/ecchi1234/-CSDL-WebApp-Library-Management/blob/master/B%C3%A1o%20c%C3%A1o.pdf
+
 Tài khoản demo:
 
 **Admin:**
