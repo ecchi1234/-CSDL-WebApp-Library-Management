@@ -67,7 +67,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item active" style="background-color: #31dc89;">
                <a class="nav-link" href="dashboard.php">
                <i class="fas fa-chart-line"></i>
                <span>Thống kê</span></a>

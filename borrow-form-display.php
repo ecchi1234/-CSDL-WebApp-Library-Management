@@ -8,9 +8,8 @@ require_once "config.php";
 //get id from ajax
 $bookCode = $_POST['bookCode'];
 
-$sql = "SELECT b.bookName, (b.quantity - IF(a.quantity IS NULL, 0, SUM(a.quantity))) as availble FROM books b 
-LEFT JOIN actions a ON a.bookCode = b.bookCode 
-WHERE b.bookCode=".$bookCode." AND a.dateBack IS NULL";
+$sql = "SELECT b.bookName, b.quantity as availble FROM books b 
+WHERE b.bookCode=".$bookCode;
 
 if ($result = mysqli_query($link, $sql)){
     if (mysqli_num_rows($result) > 0){
@@ -30,6 +29,9 @@ if ($result = mysqli_query($link, $sql)){
                         ';
             echo $response;
         }
+    }
+    else{
+        echo "ahihih";
     }
 }
 else{

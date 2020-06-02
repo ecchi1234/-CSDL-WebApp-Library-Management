@@ -55,17 +55,29 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password);
                     if(mysqli_stmt_fetch($stmt)){
                         if(password_verify($password, $hashed_password) || ($password==$hashed_password)){
-                            // Password is correct, so start a new session
-                            session_start();
+                            $sql2 = "SELECT status FROM reader WHERE cardNumber =".$id;
+                            if ($result2 = mysqli_query($link, $sql2)){
+                              if ($row2 = mysqli_fetch_array($result2)){
+                                $status = $row2['status'];
+                                if ($status == 1){
+                                  // Password is correct, so start a new session
+                                  session_start();
                             
-                            // Store data in session variables
-                            $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $id;
-                            $_SESSION["username"] = $username;
-                            $_SESSION["msg"] = "";                            
-                            echo "test3";
-                            // Redirect user to welcome page
-                            header("location: reader-dashboard.php");
+                                  // Store data in session variables
+                                  $_SESSION["loggedin"] = true;
+                                  $_SESSION["id"] = $id;
+                                  $_SESSION["username"] = $username;
+                                  $_SESSION["msg"] = "";                            
+                                  echo "test3";
+                                  // Redirect user to welcome page
+                                  header("location: reader-dashboard.php");
+                                }
+                                else{
+                                  echo "<script>alert('Tài khoản của bạn đã bị khóa. Hãy liên hệ với thủ thư để mở khóa thẻ!')</script>";
+                                }
+                              }
+                            }
+                            
                         } else{
                             // Display an error message if password is not valid
                             $password_err = "The password you entered was not valid.";

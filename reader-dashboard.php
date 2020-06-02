@@ -8,6 +8,20 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
    header("location: index.php");
    exit;
 }
+else{
+   require_once "config.php";
+
+   $sql = "SELECT datediff(expiredDay, DATE(NOW())) AS dayLeft FROM card WHERE cardNumber = ".$_SESSION['id'];
+
+   if ($result = mysqli_query($link, $sql)){
+      if($row = mysqli_fetch_array($result)){
+         $dayLeft = $row['dayLeft'];
+         if ($dayLeft <= 0){
+            echo "<script>alert('Thẻ của bạn đã hết hạn, hãy liên hệ thủ thư để gia hạn thẻ!')</script>";
+         }
+      }
+   }
+}
 
 ?>
 <!DOCTYPE html>
@@ -61,7 +75,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
          <!-- Divider -->
          <hr class="sidebar-divider">
          <!-- Nav Item - Dashboard -->
-         <li class="nav-item active">
+         <li class="nav-item active"  style="background-color: #31dc89;">
             <a class="nav-link" href="reader-dashboard.php">
                <i class="fas fa-hands-helping"></i>
                <span>Trang chủ</span></a>

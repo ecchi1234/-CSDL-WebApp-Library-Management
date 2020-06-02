@@ -56,6 +56,20 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       $("#borrowModal").on("hidden.bs.modal", function() {
         $("#borrowModal").html(borrowmodalhtml);
       });
+
+      // display this when quantity of book is zero
+
+      $('.notvalid').click(function() {
+        var bookCode = $(this).data('id');
+        $tr = $(this).closest('.card');
+        var data = $tr.children('.card-title').map(function() {
+          return $(this).text();
+        }).get();
+
+        console.log(data);
+
+        $('#notvalidModal .modal-body span b').text(' ' + data[0]);
+      });
     });
   </script>
 </head>
@@ -75,7 +89,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       <!-- Divider -->
       <hr class="sidebar-divider">
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
+      <li class="nav-item active" style="background-color: #31dc89;">
         <a class="nav-link" href="borrow.php">
           <i class="fas fa-book-open"></i>
           <span>Mượn sách</span></a>
@@ -311,7 +325,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 }
                 $calc = $perpage * $page;
                 $start = $calc - $perpage;
-                $sql = "SELECT b.bookCode, b.bookName, b.bookImage, a.authorName, c.categoryName, p.publisherName, b.publishYear, b.quantity FROM books b
+                $sql = "SELECT b.bookCode, b.bookName, b.bookImage, a.authorName, c.categoryName, p.publisherName, b.publishYear, b.quantity, b.duration FROM books b
                      INNER JOIN authors a ON a.authorCode=b.authorCode
                      INNER JOIN category c ON c.categoryCode=b.categoryCode
                      INNER JOIN publisher p ON p.publisherCode=b.publisherCode LIMIT " . $start . ", " . $perpage;
@@ -330,7 +344,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         <h5 class="card-title name-book"><?php echo $post['bookName']; ?></h5>
                         <div class="row">
                           <p> <a class="btn btn-primary btn-primary-book" data-toggle="collapse" href="#book-detail-<?php echo $post['bookCode']; ?>" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Chi tiết</a></p>
-                          <p> <a class="btn btn-danger btn-danger-book borrow" data-toggle="modal" data-target="#borrowModal" data-id="<?php echo $post['bookCode']; ?>" role="button" aria-expanded="false" aria-controls="multiCollapseExample1" style="color: #fff;">Mượn</a></p>
+                          <p> <a class="btn btn-danger btn-danger-book borrow <?php if ($post['quantity'] <= 0){echo "notvalid";}?>" data-toggle="modal" data-target="<?php if ($post['quantity'] <= 0){echo "#notvalidModal";} else{ echo "#borrowModal";}?>" data-id="<?php echo $post['bookCode']; ?>" role="button" aria-expanded="false" aria-controls="multiCollapseExample1" style="color: #fff;">Mượn</a></p>
                         </div>
                       </div>
                       <div class="row">
@@ -340,36 +354,15 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                               <p class="card-text card-text-book">Tác giả: <?php echo $post['authorName']; ?></p>
                               <p class="card-text card-text-book">Thể loại: <?php echo $post['categoryName']; ?></p>
                               <p class="card-text card-text-book">Nhà xuất bản: <?php echo $post['publisherName']; ?></p>
-                              <p class="card-text card-text-book">Thời hạn: 50 ngày</p>
-                              <p class="card-text card-text-book">Tình trạng: <?php 
-                                $flag = 0;
-                                $sql1 = "SELECT sum(quantity) as borrowed FROM actions WHERE bookCode = ".$post['bookCode']." AND dateBack IS NULL;";
-                                if($result1 = mysqli_query($link, $sql1)){
-                                  if(mysqli_num_rows($result1) > 0){
-                                      if ($row = mysqli_fetch_array($result1)){
-                                        $borrowed = $row['borrowed'];
-                                      }
-                                    }
-                                    else{
-                                      echo "Còn sách";
-                                      $flag = 1;
-                                    }
-                                  }
-                                  else{
-                                    echo "smt went wrong";
-                                    $flag = 1;
-                                  }
+                              <p class="card-text card-text-book">Thời hạn: <?php echo $post['duration'];?></p>
+                              <p class="card-text card-text-book">Tình trạng: <?php
+                                                                              if ($post['quantity'] <= 0) {
+                                                                                echo "<span style='color: red;'>Hết sách</span>";
+                                                                              } else {
+                                                                                echo "<span style='color: green;'>Còn sách</span>";
+                                                                              }
 
-                                  if ($flag == 0){
-                                    if ($post['quantity'] > $borrowed){
-                                      echo "Còn sách";
-                                    }
-                                    else{
-                                      echo "Hết sách";
-                                    }
-                                  }
-
-                              ?></p>
+                                                                              ?></p>
                             </div>
                           </div>
                         </div>
@@ -469,19 +462,46 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           </button>
         </div>
         <form action="addToBookcase.php" method="post">
-        <div class="modal-body">
-          <div class="spinner-border text-success" style="margin: 0 auto;"></div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-         
+          <div class="modal-body">
+            <div class="spinner-border text-success" style="margin: 0 auto;"></div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
             <button type="submit" class="btn btn-primary" name="borrow">Mượn sách</a>
-          
-        </div>
+
+          </div>
         </form>
       </div>
     </div>
   </div>
+  <!---->
+  <div class="modal fade" id="notvalidModal">
+    <div class="modal-dialog" role=>
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Mượn sách</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          Xin lỗi, bạn không thể mượn <span><b></b></span> do số lượng sách đã hết!
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <form>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!---->
   </div>
   </div>
   <!-- Bootstrap core JavaScript-->

@@ -147,7 +147,7 @@ if(!isset($_SESSION["aloggedin"]) || $_SESSION["aloggedin"] !== true){
             <!-- Divider -->
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item active" style="background-color: #31dc89;">
                <a class="nav-link" href="card.php">
                <i class="fas fa-id-card"></i>
                <span>Quản lý thẻ</span></a>

@@ -1,8 +1,8 @@
 <?php
 // start session
 session_start();
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: index.php");
+if (!isset($_SESSION["aloggedin"]) || $_SESSION["aloggedin"] !== true) {
+    header("location: adminlogin.php");
     exit;
 }
 ?>
@@ -60,14 +60,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="giveback.php">
-                    <i class="fas fa-backward"></i>
-                    <span>Quản lý mượn trả</span></a>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
                 <a class="nav-link" href="borrow.php">
                     <i class="fas fa-book-open"></i>
                     <span>Quản lý mượn sách</span></a>
@@ -91,7 +83,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             <!-- Divider -->
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item active" style="background-color: #31dc89;">
                 <a class="nav-link" href="help.php">
                     <i class="fas fa-hands-helping"></i>
                     <span>Trợ giúp</span></a>
@@ -224,7 +216,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-blue-600 "><?php echo htmlspecialchars($_SESSION["username"]); ?></span>
+                                <span class="mr-2 d-none d-lg-inline text-blue-600 "><?php echo htmlspecialchars($_SESSION["admin"]); ?></span>
                                 <img class="img-profile rounded-circle" src="https://kenh14cdn.com/thumb_w/620/2018/5/16/3189533012638884437482503274448191335956480n-15264802105001243615494.jpg">
                             </a>
                             <!-- Dropdown - User Information -->

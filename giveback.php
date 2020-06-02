@@ -61,7 +61,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item active" style="background-color: #31dc89;">
                <a class="nav-link" href="giveback.php">
                <i class="fas fa-backward"></i>
                <span>Quản lý mượn trả</span></a>
@@ -285,9 +285,11 @@
                     require_once "config.php";
                     
                     // Attempt select query execution
-                    $sql = "SELECT a.cardNumber, r.readerName, l.librarianName, a.quantity, a.dateBorrow, if (a.dateBack IS NULL, 'N/A', a.dateBack) as dateBack 
-                    FROM actions a INNER JOIN librarian l ON a.librarianCode = l.librarianCode 
-                    INNER JOIN reader r ON a.cardNumber=r.cardNumber";
+                    $sql = "SELECT a.cardNumber, r.readerName, b.bookName, l.librarianName, a.quantity, a.dateBorrow, if (a.dateBack IS NULL, 'N/A', a.dateBack) as dateBack 
+                    FROM actions a 
+                    INNER JOIN librarian l ON a.librarianCode = l.librarianCode 
+                    INNER JOIN reader r ON a.cardNumber=r.cardNumber
+                    INNER JOIN books b on b.bookCode = a.bookCode";
                     if($result = mysqli_query($link, $sql)){
                         if(mysqli_num_rows($result) > 0){
                                 echo "<thead>";
@@ -295,6 +297,7 @@
                                         echo "<th>Mã thẻ</th>";
                                         echo "<th>Tên độc giả</th>";
                                         echo "<th>Nhân viên trực quản</th>";
+                                        echo "<th>Tên sách</th>";
                                         echo "<th>Số lượng mượn</th>";
                                         echo "<th>Ngày mượn</th>";
                                         echo "<th>Ngày trả</th>";
@@ -317,6 +320,7 @@
                                         echo "<td>" . $row['cardNumber'] . "</td>";
                                         echo "<td>" . $row['readerName'] . "</td>";
                                         echo "<td>" . $row['librarianName'] . "</td>";
+                                        echo "<td>" .$row['bookName']. "</td>";
                                         echo "<td>" . $row['quantity'] . "</td>";
                                         echo "<td>" . $dateBorrow . "</td>";
                                         echo "<td>" . $dateBack . "</td>";

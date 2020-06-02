@@ -46,11 +46,20 @@ if (isset($_POST['id']) && !empty($_POST['id'])){
 
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
+
+                $sql1 = "UPDATE books SET quantity = (quantity -". $quantity.") WHERE bookCode = ".$bookCode;
+
+                if ($stmt1 = mysqli_query($link, $sql1)){
+                    // Records updated successfully. Redirect to landing page
+                    $_SESSION['msg']="Mượn sách thành công";
+                    header("location: borrow.php");
+                    exit();
+                }
+                else{
+                    echo "something went wrong. please try again later";
+                }
                
-                // Records updated successfully. Redirect to landing page
-                $_SESSION['msg']="Mượn sách thành công";
-                header("location: borrow.php");
-                exit();
+                
 
                 
             } else{
