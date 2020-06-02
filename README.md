@@ -19,6 +19,12 @@ username: ecchi123
 
 pass: 123456
 
+**Lưu ý**
+
+Khi vào trang web, mặc định sẽ là màn hình đăng nhập dành cho người đọc. Nếu admin muốn truy cập vào trang dành cho admin cần nhấn vào liên kết 'Sign in as Admin?'.
+
+Admin không thể tạo tài khoản mà chỉ có người đọc được tự tạo tài khoản.
+
 ## Yêu cầu chức năng
 **Đối tượng sử dụng:** 
 + Cán bộ nhân viên thư viện
@@ -28,16 +34,18 @@ pass: 123456
 
 _Về phía cán bộ nhân viên thư viện:_
 + Đăng nhập với tư cách admin
-+ Có các chức năng chính trong quản lý sách, quản lý bạn đọc, quản lý mượn trả: thêm, sửa, xóa, xem thông tin.
++ Có các chức năng chính trong quản lý sách, quản lý bạn đọc: thêm, sửa, xóa, xem thông tin.
++ Quan sát được danh sách các hoạt động mượn trả
++ Quan sát được danh sách các thẻ 
++ Tìm kiếm thông tin trong các bảng.
 + Thống kê số lượng sách, số lượng người đọc còn đang hoạt động, số lượng người đọc không còn hoạt động, thống kê số lượng sách đang được mượn.
 
 _Về phía bạn đọc:_
 + Đăng ký/ đăng nhập vào với tư cách bạn đọc
-+ Tìm kiếm, tra cứu sách và mượn sách nếu đủ điều kiện (còn sách, thẻ còn hạn) và cảnh báo nếu không đủ điều kiện.
-+ Thông báo gia hạn thẻ nếu thẻ hết hạn.
-+ Thống kê số sách đang mượn, đã mượn, đã trả, chưa trả.
-+ Chỉnh sửa thông tin cá nhân
-+ Đổi mật khẩu tài khoản (nếu là lần đầu thì yêu cầu phải đổi vì mật khẩu lúc đầu được tạo mặc định cho các tài khoản)
++ Tìm kiếm, tra cứu sách, xem thông tin sách (tên, tác giả, nhà xuất bản, thời hạn mượn,...) và mượn sách nếu đủ điều kiện (còn sách) và cảnh báo nếu không đủ điều kiện.
++ Trả sách
++ Thông báo gia hạn thẻ nếu thẻ hết hạn. (khi đăng nhập)
++ Xem và chỉnh sửa thông tin cá nhân
 
 ## Cơ sở dữ liệu:
 
