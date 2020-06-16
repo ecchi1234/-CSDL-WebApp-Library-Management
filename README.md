@@ -3,7 +3,7 @@
 
 Link web: https://deadlib.herokuapp.com/
 
-Báo cáo: https://bit.ly/bao-cao-btl hoặc https://bit.ly/bao-cao-btl-du-phong
+Báo cáo: https://bit.ly/bao-cao-btl hoặc https://bit.ly/bao-cao-btl-du-phong-1
 
 Tài khoản demo:
 
@@ -49,4 +49,4 @@ _Về phía bạn đọc:_
 
 ## Cơ sở dữ liệu:
 
-![Library Model Database](https://github.com/ecchi1234/-CSDL-WebApp-Library-Management/blob/master/lib-eer-diagram%20(2).png)
+![Library Model Database](https://github.com/ecchi1234/-CSDL-WebApp-Library-Management/blob/master/docs/lib-eer-diagram%20(2).png)
