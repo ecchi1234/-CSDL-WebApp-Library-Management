@@ -4,12 +4,12 @@ session_start();
  
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: code/reader-dashboard.php");
+    header("location: reader-dashboard.php");
     exit;
 }
  
 // Include config file
-require_once "code/config.php";
+require_once "config.php";
  
 // Define variables and initialize with empty values
 $username = $password = "";
@@ -115,11 +115,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   <title>DEADLIB</title>
 
   <!-- Custom fonts for this template-->
-  <link href="code/v/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="v/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.google.com/specimen/Montserrat" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="code/css/lib.css" rel="stylesheet">
+  <link href="css/lib.css" rel="stylesheet">
 
 </head>
 
@@ -170,10 +170,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="code/adminlogin.php">Sign-in as Admin?</a>
+                    <a class="small" href="adminlogin.php">Sign-in as Admin?</a>
                   </div>
                   <div class="text-center">
-                    <a class="small" href="code/register.php">Create an Account!</a>
+                    <a class="small" href="register.php">Create an Account!</a>
                   </div>
                 </div>
               </div>
@@ -188,14 +188,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="code/v/jquery/jquery.min.js"></script>
-  <script src="code/v/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="v/jquery/jquery.min.js"></script>
+  <script src="v/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="code/v/jquery-easing/jquery.easing.min.js"></script>
+  <script src="v/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="code/js/sb-admin-2.min.js"></script>
+  <script src="js/sb-admin-2.min.js"></script>
 
 </body>
 

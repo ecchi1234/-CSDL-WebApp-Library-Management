@@ -71,7 +71,7 @@
 
                    $response.="<div class='form-row'>";
                    $response.="<div class='col-md-12 mb-3 col-pb'>";
-                   $response.="<p class='label-pb' for='card'>Địa chỉ</p>";
+                   $response.="<p class='label-pb' for='card'>Số thẻ</p>";
                    $response.="<input type='text' class='form-control form-control-pb' id='card' name='cardNumber' value='".$cardNumber."' required>";
                    $response.="</div>";
                    $response.="</div>";

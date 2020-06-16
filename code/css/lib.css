@@ -206,39 +206,7 @@
   margin-bottom: 0.5rem;
   font-weight: 600;
   }
-  .label-pb#createDay{
-  margin-left: 315px;
-  }
-  .label-pb#expiredDay{
-  margin-left: 315px;
-  }
-  .label-pb#numberCard{
-  margin-left: 40px;
-  }
-  .label-pb#gender{
-  margin-left: 40px;
-  }
-  .label-pb#nameBook{
-  margin-left: 40px;
-  }
-  .label-pb#nameAuthor{
-  margin-left: 40px;
-  }
-  .label-pb#category{
-  margin-left: 40px;
-  }
-  .label-pb#publisher{
-  margin-left: 40px;
-  }
-  .label-pb#year{
-  margin-left: 315px;
-  }
-  .label-pb#quantity{
-  margin-left: 315px;
-  }
-  .label-pb#expired{
-  margin-left: 315px;
-  }
+  
   .label-profile{
   display: inline-block;
   font-weight: 800;
@@ -1044,9 +1012,7 @@
   flex: 0 0 100%;
   max-width: 100%;
   }
-  .col-pb{
-  margin-top: -36px;
-  }
+  
   .order-md-first {
   order: -1;
   }
@@ -1757,21 +1723,18 @@
   border: 1px solid #d1d3e2;
   border-radius: 0.35rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  margin-left: 40px;
   }
   .form-control.form-control-gender-card{
   margin-left: 0px;
   width: 140px;
   }
   .form-control.form-control-gender{
-  margin-left: 315px;
   width: 150px;
   }
   .form-control.form-control-pb2{
   width: 94%;
   }
   .form-control.form-control-pb{
-  margin-left: 315px;
   width: 61%;
   }
   .form-control.form-control-eu{
@@ -4139,7 +4102,6 @@
   color: black
   }
   .card-body.card-body-book{
-  height: 90vh;
   overflow: auto;
   }
   .card.card-body-book-detail{
@@ -10199,6 +10161,9 @@
   }
   .thaotac{
   font-size: 20px;
+  }
+  .fa.fa-user-times{
+    color: red;
   }
   .fa-trash{
   color: red;
