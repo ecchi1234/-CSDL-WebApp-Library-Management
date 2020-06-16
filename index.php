@@ -70,7 +70,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                   $_SESSION["msg"] = "";                            
                                   echo "test3";
                                   // Redirect user to welcome page
-                                  header("location: reader-dashboard.php");
+                                  header("location: code/reader-dashboard.php");
                                 }
                                 else{
                                   echo "<script>alert('Tài khoản của bạn đã bị khóa. Hãy liên hệ với thủ thư để mở khóa thẻ!')</script>";
