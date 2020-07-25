@@ -120,6 +120,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
   <!-- Custom styles for this template-->
   <link href="code/css/lib.css" rel="stylesheet">
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyA5y5AeQ-PE6Jr4L6z9_5sVuVEHu9LYFJI&sensor=false&v=3&libraries=geometry"></script>
 
 </head>
 
@@ -142,6 +143,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">DEADLIB</h1>
                     <h4 class="mb-3">Member Login</h4>
+                    <div id="demo"></div>
+                    <script>
+                        var x = document.getElementById("demo");
+                            function getLocation() {
+                            if (navigator.geolocation) {
+                                navigator.geolocation.getCurrentPosition(showPosition);
+                            } else {
+                                x.innerHTML = "Geolocation is not supported by this browser.";
+                            }
+                            }
+
+                            function showPosition(position) {
+                            x.innerHTML = "Latitude: " + position.coords.latitude +
+                            "<br>Longitude: " + position.coords.longitude;
+                        }
+                        </script>
                   </div>
                   <form class="user" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                     <div class="form-group">
