@@ -120,7 +120,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
   <!-- Custom styles for this template-->
   <link href="code/css/lib.css" rel="stylesheet">
-  <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyA5y5AeQ-PE6Jr4L6z9_5sVuVEHu9LYFJI&sensor=false&v=3&libraries=geometry"></script>
+  <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyA5y5AeQ-PE6Jr4L6z9_5sVuVEHu9LYFJI&sensor=false&v=3&libraries=geometry"></script>
 
 </head>
 
