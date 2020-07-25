@@ -27,6 +27,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <link href="https://fonts.google.com/specimen/Montserrat" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="css/lib.css" rel="stylesheet">
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyA5y5AeQ-PE6Jr4L6z9_5sVuVEHu9LYFJI&sensor=false&v=3&libraries=geometry"></script>
   <!--This need to be on top of this html-->
   <script src="./v/jquery/jquery.min.js"></script>
   <script src="./js/sb-admin-2.min.js"></script>
@@ -221,7 +222,27 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     <div class="status-indicator bg-success"></div>
                   </div>
                   <div class="font-weight-bold">
-                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
+                    <div id="demo" class="text-truncate">
+                      
+                    </div>
+                    <script>
+                        var x = document.getElementById("demo");
+                            function getLocation() {
+                            if (navigator.geolocation) {
+                                navigator.geolocation.getCurrentPosition(showPosition);
+                            } else {
+                                x.innerHTML = "Geolocation is not supported by this browser.";
+                            }
+                            }
+
+                            function showPosition(position) {
+                            x.innerHTML = "Latitude: " + position.coords.latitude +
+                            "<br>Longitude: " + position.coords.longitude;
+                              console.log(position.coords.latitude);
+                              console.log(position.coords.longitude);
+                        }
+                    
+                        </script>
                     <div class="small text-gray-500">Emily Fowler · 58m</div>
                   </div>
                 </a>
